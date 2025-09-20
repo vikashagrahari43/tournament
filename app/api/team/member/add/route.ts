@@ -9,40 +9,45 @@ export async function PUT(req: NextRequest) {
     try {
         await connecttoDatabase()
     
-        const session = await getServerSession(authOptions)
+        const session = await getServerSession(authOptions);
+       
         if (!session) {
             return NextResponse.json(
-                {error: "The User is not authenticated"},
-                {status : 400}
+                { error: "The User is not authenticated"  },
+                { status : 401 }
             )
         }
         
         
-        const team = await Team.findOne({owner : session.user.id})
+        const team = await Team.findOne({owner : session.user.id })
         if(!team){
             return NextResponse.json(
-                {error : "The user has not any team"},
-                {status : 404}
+                { error : "The user has not any team" },
+                { status : 404 }
             )
         }
         
-        const {member} = await req.json()
+        const { member }  = await req.json()
     
         if (!member?.name || !member?.bgmiId || !member?.role) {
           return NextResponse.json({ error: "All fields required" }, { status: 400 });
         }
     
-        team.members.push(member);
+        team.members.push({
+            name: member.name,
+            bgmiId: member.bgmiId,
+            role: member.role,
+        });
         await team.save();
     
         return NextResponse.json(
             {
                 success  :true , team            
             })
-    } catch (error) {
-        NextResponse.json(
-            {error : "Unable to add Member , Internal Error"},
-            {status : 500}
+    } catch (error : any) {
+       return NextResponse.json(
+            { error: "Error " + error.message },
+            { status: 500 }
         )
     }
 }

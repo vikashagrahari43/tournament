@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import TeamDas from "@/component/TeamDas";
 
@@ -7,7 +8,7 @@ type Member = {
   role: string;
 };
 
-export default function TeamManager() {
+export default function MainTeam() {
   const [team, setTeam] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
