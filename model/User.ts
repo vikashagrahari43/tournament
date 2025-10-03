@@ -8,13 +8,15 @@ interface Iuser {
     id?: mongoose.Types.ObjectId ;
     createdAt ?: Date ;
     modifiedAt ?: Date ;
+    teamId?: string | null ;
 }
 
 const UserSchema = new Schema<Iuser>(
     {
-    username : {type :"String",  required : true , unique: true },
-    email : {type :"String",  required : true , unique: true },
-    password : {type :"String",  required : true , },
+    username : {type : String,  required : true ,  },
+    email : {type : String,  required : true , unique: true },
+    password : {type : String,  required : true , },
+    teamId:{type : String , default: null}
     },
     {
         timestamps: true,

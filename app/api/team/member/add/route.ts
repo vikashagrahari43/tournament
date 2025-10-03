@@ -22,7 +22,7 @@ export async function PUT(req: NextRequest) {
         const team = await Team.findOne({owner : session.user.id })
         if(!team){
             return NextResponse.json(
-                { error : "The user has not any team" },
+                { error : "You are not the owner of this team" },
                 { status : 404 }
             )
         }

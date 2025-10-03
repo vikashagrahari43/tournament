@@ -48,7 +48,29 @@ export const authOptions: NextAuthOptions ={
             }
         },
      }),
+
+     CredentialsProvider({
+        id: "admin-login",
+        name: "Admin Credentials",
+        credentials: {
+            username: {label : "Username", type: "text"},
+            password: {label : "Password", type: "password"},
+        },
+        async authorize(credentials) {
+            if(
+                credentials?.username === process.env.ADMIN_USERNAME && credentials?.password === process.env.ADMIN_PASSWORD
+            ) {
+                return {
+                    id : "admin",
+                    email : "admin@gmail.com",
+                    
+                }
+            }
+            throw new Error("Invalid Admin Credentials")
+        }
+     })
  ],
+
 
  callbacks: {
     async jwt({ token, user}) {

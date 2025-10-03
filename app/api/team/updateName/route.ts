@@ -32,7 +32,7 @@ export async function PUT(req: NextRequest ) {
  )
  if (!updatedTeam) {
        return NextResponse.json(
-         { error: "Team not found" }, 
+         { error: "You are not the owner of this team" }, 
          { status: 404 }
        );
      }

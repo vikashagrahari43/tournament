@@ -10,6 +10,8 @@ interface Iteam extends Document {
     owner : mongoose.Types.ObjectId;
     name : string, 
     members : ITeamMember[];
+    teamid ?: string;
+    createdby ?: string;
 }
 
 const teamMemberSchema = new Schema<ITeamMember>({
@@ -30,6 +32,8 @@ const TeamSchema = new Schema<Iteam>({
             message : "A team must have at least 4 and at most 6 members.",
         }
     },
+    teamid : {type : String, unique : true, sparse: true},
+    createdby : {type : String},
 });
 
 const Team = models?.Team || model<Iteam>("Team" , TeamSchema); 

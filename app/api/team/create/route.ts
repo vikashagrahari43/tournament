@@ -1,6 +1,7 @@
 import { authOptions } from "@/lib/auth";
 import { connecttoDatabase } from "@/lib/db";
 import Team from "@/model/Team";
+import User from "@/model/User";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -43,7 +44,21 @@ export async function POST(req : NextRequest) {
         owner : session.user.id, 
         name,
         members,
+        teamid : `${Math.floor(10000000 + Math.random() * 90000000)}`,
+        createdby: session.user.name || session.user.email || "Unknown",
       });
+
+      const user = await User.findOne({email: session.user.email})
+      if(!user){
+        return NextResponse.json(
+            { error: "User not found" },
+            { status: 404 }
+          );
+      }
+      if (user) {
+        user.teamId = team.teamid;
+        await user.save();
+      }
     
       return NextResponse.json(
         {message : "Team created successfully", team},

@@ -26,7 +26,7 @@ export async function DELETE( req : NextRequest) {
      const team = await Team.findOne( { owner : session.user.id } )
         if(!team){
          return NextResponse.json(
-          {error : "Team is not Found "},
+          {error : "You are not the owner of this team"},
           {status : 500}
        )
     }

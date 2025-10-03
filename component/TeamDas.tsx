@@ -9,14 +9,13 @@ function TeamDas({team} : {team: any}) {
   const [originalName, setOriginalName] = useState<string>(team.name)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [members, setMembers] = useState(team.members || [])
+  const [copiedTeamId, setCopiedTeamId] = useState<boolean>(false)
 
   const handleEdit = () => {
     if (isEditing) {
-     
       setTeamName(originalName)
       setIsEditing(false)
     } else {
-      
       setOriginalName(teamName)
       setIsEditing(true)
     }
@@ -47,15 +46,12 @@ function TeamDas({team} : {team: any}) {
         setIsEditing(false)
         setOriginalName(data.team.name) 
         setTeamName(data.team.name) 
-        
       } else {
         alert(data.error || "Failed to update team name")
-        // Restore original name on error
         setTeamName(originalName)
       }
     } catch (error) {
       alert("Failed to update team name")
-      // Restore original name on error
       setTeamName(originalName)
     } finally {
       setIsLoading(false)
@@ -66,7 +62,7 @@ function TeamDas({team} : {team: any}) {
     if (e.key === 'Enter') {
       updateName()
     } else if (e.key === 'Escape') {
-      handleEdit() // Cancel edit
+      handleEdit()
     }
   }
 
@@ -81,13 +77,20 @@ function TeamDas({team} : {team: any}) {
         body: JSON.stringify({memberId})
       })
 
-        
       const data = await res.json()
       if (res.ok) {
         setMembers(data.team.members)
       } else {
         alert(data.error || "Failed to remove member")
       }
+  }
+
+  const copyTeamId = () => {
+    if (team.teamid) {
+      navigator.clipboard.writeText(team.teamid)
+      setCopiedTeamId(true)
+      setTimeout(() => setCopiedTeamId(false), 2000)
+    }
   }
 
   return (
@@ -144,7 +147,6 @@ function TeamDas({team} : {team: any}) {
 
         {/* Mobile Layout - Vertical */}
         <div className="sm:hidden space-y-4 mb-4">
-          {/* Team Name Input */}
           <div className="w-full">
             <input 
               type="text" 
@@ -162,7 +164,6 @@ function TeamDas({team} : {team: any}) {
             />
           </div>
           
-          {/* Action Buttons */}
           <div className="flex gap-2">
             {isEditing ? (
               <>
@@ -191,7 +192,35 @@ function TeamDas({team} : {team: any}) {
             )}
           </div>
         </div>
-        <p className="text-red-100 mt-2 text-sm sm:text-base">Manage your team members</p>
+
+        {/* Team Info Section */}
+        <div className="mt-4 space-y-2">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+            {/* Team ID */}
+            <div className="flex items-center gap-2 bg-red-700/30 rounded-lg px-3 py-2">
+              <span className="text-red-200 text-xs sm:text-sm font-medium">Team ID:</span>
+              <code className="text-white font-mono text-xs sm:text-sm bg-red-900/40 px-2 py-1 rounded">
+                {team.teamid || "N/A"}
+              </code>
+              <button
+                onClick={copyTeamId}
+                className="ml-1 text-white hover:text-red-200 transition-colors cursor-pointer text-xs sm:text-sm"
+                title="Copy Team ID"
+              >
+                {copiedTeamId ? "✓" : "📋"}
+              </button>
+            </div>
+
+            {/* Created By */}
+            <div className="flex items-center gap-2 bg-red-700/30 rounded-lg px-3 py-2">
+              <span className="text-red-200 text-xs sm:text-sm font-medium">Created by:</span>
+              <span className="text-white font-semibold text-xs sm:text-sm">
+                {team.createdby || "Unknown"}
+              </span>
+            </div>
+          </div>
+          <p className="text-red-100 text-sm sm:text-base">Manage your team members</p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -200,7 +229,7 @@ function TeamDas({team} : {team: any}) {
           <h3 className="text-lg sm:text-xl font-bold text-red-500 mb-4 sm:mb-6">TEAM MEMBERS</h3>
           <div className="space-y-3 sm:space-y-4">
             {members.map((member: any, index: number) => (
-              <div key={index} className="bg-gray-800 rounded-lg p-3 sm:p-4 flex flex-row  items-center justify-between gap-3 sm:gap-0">
+              <div key={index} className="bg-gray-800 rounded-lg p-3 sm:p-4 flex flex-row items-center justify-between gap-3 sm:gap-0">
                 <div className="flex items-center">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-600 rounded-full flex items-center justify-center text-lg sm:text-2xl mr-3 sm:mr-4 flex-shrink-0">
                     👤
@@ -214,7 +243,7 @@ function TeamDas({team} : {team: any}) {
                   </div>
                 </div>
                 <div className="flex justify-end sm:justify-start">
-                  <button className="bg-red-600 text-white px-3 py-1 rounded text-xs hover:bg-red-700 transition-colors cursor-pointer" onClick={() => removeMember(member._id) }>
+                  <button className="bg-red-600 text-white px-3 py-1 rounded text-xs hover:bg-red-700 transition-colors cursor-pointer" onClick={() => removeMember(member._id)}>
                     Remove
                   </button>
                 </div>
@@ -238,52 +267,50 @@ function TeamDas({team} : {team: any}) {
 
         {/* Team Stats */}
         <div className="space-y-4 sm:space-y-6">
-      <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
-        <h3 className="text-base sm:text-lg font-bold text-red-500 mb-3 sm:mb-4">TEAM RULES</h3>
-        <div className="space-y-2 sm:space-y-3">
-          <div className="flex justify-between text-sm sm:text-base">
-            <span className="text-gray-400">Min K/D Ratio</span>
-            <span className="font-bold text-red-500">1.5+</span>
+          <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
+            <h3 className="text-base sm:text-lg font-bold text-red-500 mb-3 sm:mb-4">TEAM RULES</h3>
+            <div className="space-y-2 sm:space-y-3">
+              <div className="flex justify-between text-sm sm:text-base">
+                <span className="text-gray-400">Min K/D Ratio</span>
+                <span className="font-bold text-red-500">1.5+</span>
+              </div>
+              <div className="flex justify-between text-sm sm:text-base">
+                <span className="text-gray-400">Age Requirement</span>
+                <span className="font-bold text-red-500">16+</span>
+              </div>
+              <div className="flex justify-between text-sm sm:text-base">
+                <span className="text-gray-400">Practice Sessions</span>
+                <span className="font-bold text-red-500">3/week</span>
+              </div>
+              <div className="flex justify-between text-sm sm:text-base">
+                <span className="text-gray-400">Discord Activity</span>
+                <span className="font-bold text-red-500">Required</span>
+              </div>
+              <div className="flex justify-between text-sm sm:text-base">
+                <span className="text-gray-400">Trial Period</span>
+                <span className="font-bold text-red-500">2 weeks</span>
+              </div>
+            </div>
           </div>
-          <div className="flex justify-between text-sm sm:text-base">
-            <span className="text-gray-400">Age Requirement</span>
-            <span className="font-bold text-red-500">16+</span>
-          </div>
-          <div className="flex justify-between text-sm sm:text-base">
-            <span className="text-gray-400">Practice Sessions</span>
-            <span className="font-bold text-red-500">3/week</span>
-          </div>
-          <div className="flex justify-between text-sm sm:text-base">
-            <span className="text-gray-400">Discord Activity</span>
-            <span className="font-bold text-red-500">Required</span>
-          </div>
-          <div className="flex justify-between text-sm sm:text-base">
-            <span className="text-gray-400">Trial Period</span>
-            <span className="font-bold text-red-500">2 weeks</span>
+
+          <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
+            <h3 className="text-base sm:text-lg font-bold text-red-500 mb-3 sm:mb-4">REGULATIONS</h3>
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs sm:text-sm">
+                <span className="truncate mr-2">No toxic behavior</span>
+                <span className="text-red-500 flex-shrink-0">Strict</span>
+              </div>
+              <div className="flex justify-between text-xs sm:text-sm">
+                <span className="truncate mr-2">No cheating/exploiting</span>
+                <span className="text-red-500 flex-shrink-0">Zero tolerance</span>
+              </div>
+              <div className="flex justify-between text-xs sm:text-sm">
+                <span className="truncate mr-2">Respectful communication</span>
+                <span className="text-red-500 flex-shrink-0">Always</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
-        <h3 className="text-base sm:text-lg font-bold text-red-500 mb-3 sm:mb-4">REGULATIONS</h3>
-        <div className="space-y-2">
-          <div className="flex justify-between text-xs sm:text-sm">
-            <span className="truncate mr-2">No toxic behavior</span>
-            <span className="text-red-500 flex-shrink-0">Strict</span>
-          </div>
-          <div className="flex justify-between text-xs sm:text-sm">
-            <span className="truncate mr-2">No cheating/exploiting</span>
-            <span className="text-red-500 flex-shrink-0">Zero tolerance</span>
-          </div>
-          <div className="flex justify-between text-xs sm:text-sm">
-            <span className="truncate mr-2">Respectful communication</span>
-            <span className="text-red-500 flex-shrink-0">Always</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
       </div>
     </div>
   )

@@ -24,16 +24,17 @@ export async function POST(request : NextRequest){
          )
      }
  
-     await User.create(
+    const user =  await User.create(
          {
              username,
              email, 
-             password
+             password,
+             teamId : null,
          }
      )
  
      return NextResponse.json(
-         {message : "Registration Successfull"},
+         {message : "Registration Successfull", user},
          {status : 200 }
      )
  
