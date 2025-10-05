@@ -20,8 +20,8 @@ export async function GET(
       );
     }
 
-    const { teamid } = params;
-    console.log("Fetching team with ID:", teamid);
+    const { teamid } = await params;
+    
     const team = await Team.findOne({ teamid: teamid }); // ⚠️ use "teamid" since you set it like that in create
 
     if (!team) {

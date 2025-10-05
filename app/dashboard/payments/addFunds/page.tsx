@@ -74,12 +74,10 @@ export const AddFundsPage = () => {
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg sm:text-xl ">₹</span>
                   <input
-                    type="number"
+                    type="text"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     placeholder="0.00"
-                    min="0"
-                    step="0.01"
                     className="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 sm:p-4 sm:pl-8 pl-8 text-white text-lg sm:text-xl focus:border-green-500 focus:outline-none"
                   />
                 </div>

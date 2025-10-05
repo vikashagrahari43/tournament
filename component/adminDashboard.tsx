@@ -10,9 +10,10 @@ import {
   HelpCircle,
   Menu,
   X,
-  Target,
+  
   CreditCard,
   LogOut,
+  Wallet,
 } from 'lucide-react';
 
 const AdminDashboard = ({ children }: { children: React.ReactNode }) => {
@@ -29,14 +30,13 @@ const AdminDashboard = ({ children }: { children: React.ReactNode }) => {
   };
 
   const navItems = [
-    { id: 'home', label: 'Home', icon: Home, path: '/dashboard' },
-    { id: 'tournament', label: 'Tournament', icon: Trophy, path: '/admin/dashboard/tournament' },
-    { id: 'team', label: 'My Team', icon: Users, path: '/admin/dashboard/team' },
-    { id: 'stats', label: 'Match Statistics', icon: BarChart3, path: '/admin/dashboard/stats' },
-    { id: 'schedule', label: 'Schedule', icon: Calendar, path: '/admin/dashboard/schedule' },
-    { id: 'leaderboard', label: 'Leaderboard', icon: Target, path: '/admin/dashboard/leaderboard' },
+    { id: 'home', label: 'Home', icon: Home, path: '/admin/dashboard' },
+    { id: 'addtournament', label: 'Add Tournament', icon: Trophy, path: '/admin/dashboard/tournament' },
+    { id: 'tournament', label: 'Manage Tournament', icon: BarChart3, path: '/admin/dashboard/manageTournament' },
+    { id: 'room', label: 'Add RoomId', icon: Calendar, path: '/admin/dashboard/roomId' },
     { id: 'payments', label: 'Payments', icon: CreditCard, path: '/admin/dashboard/payments' },
-    { id: 'support', label: 'Support', icon: HelpCircle, path: '/admin/dashboard/support' },
+    { id: 'team', label: 'All Team', icon: Users, path: '/admin/dashboard/team' },
+    { id: 'wallet', label: 'All Wallet', icon: Wallet , path: '/admin/dashboard/wallet' },
   ];
 
   const handleNavigation = (path: string) => {
@@ -45,8 +45,8 @@ const AdminDashboard = ({ children }: { children: React.ReactNode }) => {
   };
 
   const isActivePath = (path: string) => {
-    if (path === '/dashboard') {
-      return pathname === '/dashboard';
+    if (path === '/admin/dashboard') {
+      return pathname === '/admin/dashboard';
     }
     return pathname.startsWith(path);
   };

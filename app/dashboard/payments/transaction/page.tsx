@@ -200,7 +200,7 @@ export default function AllTransactionsPage() {
 
           <div className="space-y-3">
             {filteredTransactions.length > 0 ? (
-              filteredTransactions.map((transaction) => (
+              [...filteredTransactions].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map((transaction) => (
                 <div 
                   key={transaction._id?.toString() || transaction.date} 
                   className="flex flex-col sm:flex-row sm:items-center justify-between bg-gray-800 rounded-lg p-3 sm:p-4 hover:bg-gray-750 transition-colors gap-3 sm:gap-0"

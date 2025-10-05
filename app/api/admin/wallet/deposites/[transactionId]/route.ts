@@ -13,7 +13,7 @@ export async function PUT(req: NextRequest, { params }: { params: { transactionI
       return NextResponse.json({ error: "Not authorized" }, { status: 401 });
     }
 
-    const { transactionId } = params;
+    const { transactionId } = await params;
     const { action } = await req.json(); // { action: "approve" | "reject" }
 
     if (!["approve", "reject"].includes(action)) {

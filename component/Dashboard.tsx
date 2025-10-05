@@ -13,6 +13,8 @@ import {
   Target,
   CreditCard,
   LogOut,
+  Gamepad2,
+  User,
 } from 'lucide-react';
 
 const Dashboard = ({ children }: { children: React.ReactNode }) => {
@@ -31,11 +33,11 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
   const navItems = [
     { id: 'home', label: 'Home', icon: Home, path: '/dashboard' },
     { id: 'tournament', label: 'Tournament', icon: Trophy, path: '/dashboard/tournament' },
-    { id: 'team', label: 'My Team', icon: Users, path: '/dashboard/team' },
-    { id: 'stats', label: 'Match Statistics', icon: BarChart3, path: '/dashboard/stats' },
-    { id: 'schedule', label: 'Schedule', icon: Calendar, path: '/dashboard/schedule' },
+    { id: 'myTournaments', label: 'My Tournaments', icon: Gamepad2 , path: '/dashboard/myTournaments' },
     { id: 'leaderboard', label: 'Leaderboard', icon: Target, path: '/dashboard/leaderboard' },
+    { id: 'team', label: 'My Team', icon: Users, path: '/dashboard/team' },
     { id: 'payments', label: 'Payments', icon: CreditCard, path: '/dashboard/payments' },
+    { id: 'myProfile', label: 'My Profile', icon: User, path: '/dashboard/profile' },
     { id: 'support', label: 'Support', icon: HelpCircle, path: '/dashboard/support' },
   ];
 

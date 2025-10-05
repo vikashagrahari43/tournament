@@ -1,198 +1,447 @@
-"use client"
-import { Clock, Target, Trophy } from "lucide-react";
-import { useEffect, useState } from "react";
+"use client";
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { Trophy, Users, Clock, Calendar, DollarSign, Loader2, AlertCircle, ChevronRight, Target, Award, TrendingUp, Zap, Star, ArrowRight } from 'lucide-react';
 
-export default function HomeDas() {
-    const [countdown, setCountdown] = useState({
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: 0
-      });
-        const teamMembers = [
-        { name: 'Phoenix', role: 'Leader', avatar: '🔥', kills: 245 },
-        { name: 'Shadow', role: 'Sniper', avatar: '🎯', kills: 198 },
-        { name: 'Storm', role: 'Assault', avatar: '⚡', kills: 176 },
-            ];
+interface Participant {
+  teamId: string;
+  teamName: string;
+  joinedAt: Date;
+  OwnerEmail: string;
+  Matchpoints?: number;
+}
 
-        const matchSchedule = [
-            { id: 'Edit 13', map: 'Sanhok World 1', time: '14:30' },
-            { id: 'Edit 12', map: 'Erangel World 3', time: '15:15' },
-            { id: 'Edit 14', map: 'Miramar Desert', time: '16:00' },
-        ];
+interface Tournament {
+  _id: string;
+  title: string;
+  slogan: string;
+  prizePool: number;
+  entryFee: number;
+  maxTeams: number;
+  enrolledTeams?: number;
+  date: string;
+  time: string;
+  status: "registering" | "completed" | "full";
+  participants?: Participant[];
+  RoomId?: string | null;
+  RoomPass?: string | null;
+}
 
-        const leaderboard = [
-            { rank: 1, team: 'Fire Dragons', points: 2840, badge: '🏆' },
-            { rank: 2, team: 'Shadow Wolves', points: 2756, badge: '🥈' },
-            { rank: 3, team: 'Thunder Hawks', points: 2691, badge: '🥉' },
-        ];
+interface TeamMember {
+  name: string;
+  bgmiId: number;
+  role: string;
+}
 
-       // Tournament countdown - Set to 2 days from now as example
-        useEffect(() => {
-          const targetDate = new Date();
-          targetDate.setDate(targetDate.getDate() + 2);
-          targetDate.setHours(18, 0, 0, 0); // Set to 6:00 PM
-      
-          const timer = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = targetDate.getTime() - now;
-      
-            if (distance > 0) {
-              setCountdown({
-                days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-                hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-                minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-                seconds: Math.floor((distance % (1000 * 60)) / 1000)
-              });
-            } else {
-              setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+interface Team {
+  _id: string;
+  owner: string;
+  name: string;
+  members: TeamMember[];
+  teamid?: string;
+  createdby?: string;
+}
+
+interface TimeRemaining {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  total: number;
+}
+
+export default function UserHomePage() {
+  const router = useRouter();
+  
+  const [upcomingTournament, setUpcomingTournament] = useState<Tournament | null>(null);
+  const [myTeam, setMyTeam] = useState<Team | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>('');
+  const [timeRemaining, setTimeRemaining] = useState<TimeRemaining | null>(null);
+  const [totalTournaments, setTotalTournaments] = useState<number>(0);
+  const [myRank, setMyRank] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  useEffect(() => {
+    if (upcomingTournament) {
+      const timer = setInterval(() => {
+        setTimeRemaining(calculateTimeRemaining(upcomingTournament.date, upcomingTournament.time));
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [upcomingTournament]);
+
+  const fetchUserData = async (): Promise<void> => {
+    try {
+      setLoading(true);
+
+      // Fetch user's tournaments
+      const tournamentsResponse = await fetch('/api/tournament/my-tournaments');
+      const tournamentsData = await tournamentsResponse.json();
+
+      if (tournamentsResponse.ok && tournamentsData.tournaments) {
+        setTotalTournaments(tournamentsData.tournaments.length);
+        
+        // Find the next upcoming tournament
+        const upcoming = tournamentsData.tournaments
+          .filter((t: Tournament) => t.status === 'registering' || t.status === 'full')
+          .sort((a: Tournament, b: Tournament) => new Date(a.date).getTime() - new Date(b.date).getTime())[0];
+        
+        if (upcoming) {
+          setUpcomingTournament(upcoming);
+          
+          // Calculate rank
+          if (upcoming.participants) {
+            const sorted = [...upcoming.participants].sort((a, b) => 
+              (b.Matchpoints || 0) - (a.Matchpoints || 0)
+            );
+            const userResponse = await fetch('/api/user/me');
+            const userData = await userResponse.json();
+            if (userData.user?.email) {
+              const index = sorted.findIndex(p => p.OwnerEmail === userData.user.email);
+              if (index !== -1) setMyRank(index + 1);
             }
-          }, 1000);
+          }
+        }
+      }
+
+      // Fetch user's team
+      const userResponse = await fetch('/api/user/me');
+      const userData = await userResponse.json();
       
-          return () => clearInterval(timer);
-        }, []);
+      if (userResponse.ok && userData.user?.teamId) {
+        const teamResponse = await fetch(`/api/team/${userData.user.teamId}`);
+        const teamData = await teamResponse.json();
+        
+        if (teamResponse.ok && teamData.team) {
+          setMyTeam(teamData.team);
+        }
+      }
+
+      setError('');
+    } catch (err) {
+      setError('Failed to load data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const calculateTimeRemaining = (dateString: string, timeString: string): TimeRemaining => {
+    const tournamentDate = new Date(dateString);
+    const now = new Date();
+    const total = tournamentDate.getTime() - now.getTime();
+
+    if (total <= 0) {
+      return { days: 0, hours: 0, minutes: 0, seconds: 0, total: 0 };
+    }
+
+    const seconds = Math.floor((total / 1000) % 60);
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(total / (1000 * 60 * 60 * 24));
+
+    return { days, hours, minutes, seconds, total };
+  };
+
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      weekday: 'long',
+      month: 'long', 
+      day: 'numeric', 
+      year: 'numeric' 
+    });
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center p-4">
+        <div className="text-center">
+          <Loader2 className="w-10 h-10 sm:w-12 sm:h-12 text-red-600 animate-spin mx-auto mb-4" />
+          <p className="text-red-400 text-base sm:text-lg">Loading your dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-   <>
-              {/* Tournament Countdown */}
-              <div className="bg-gradient-to-r from-purple-600 to-purple-800 rounded-xl p-6 lg:p-8 relative overflow-hidden">
-                <div className="relative z-10">
-                  <div className="flex items-center mb-3">
-                    <Clock className="w-6 h-6 mr-2 text-purple-200" />
-                    <h2 className="text-xl lg:text-2xl font-bold">ENROLLED TOURNAMENT</h2>
-                  </div>
-                  <p className="text-purple-100 mb-4 text-sm lg:text-base">Season 22 Finals starts in:</p>
-                  
-                  {/* Countdown Display */}
-                  <div className="grid grid-cols-4 gap-2 lg:gap-4 mb-4">
-                    <div className="bg-black bg-opacity-30 rounded-lg p-2 lg:p-3 text-center">
-                      <div className="text-2xl lg:text-3xl font-bold text-white">{countdown.days.toString().padStart(2, '0')}</div>
-                      <div className="text-xs lg:text-sm text-purple-200">DAYS</div>
-                    </div>
-                    <div className="bg-black bg-opacity-30 rounded-lg p-2 lg:p-3 text-center">
-                      <div className="text-2xl lg:text-3xl font-bold text-white">{countdown.hours.toString().padStart(2, '0')}</div>
-                      <div className="text-xs lg:text-sm text-purple-200">HOURS</div>
-                    </div>
-                    <div className="bg-black bg-opacity-30 rounded-lg p-2 lg:p-3 text-center">
-                      <div className="text-2xl lg:text-3xl font-bold text-white">{countdown.minutes.toString().padStart(2, '0')}</div>
-                      <div className="text-xs lg:text-sm text-purple-200">MINS</div>
-                    </div>
-                    <div className="bg-black bg-opacity-30 rounded-lg p-2 lg:p-3 text-center">
-                      <div className="text-2xl lg:text-3xl font-bold text-white">{countdown.seconds.toString().padStart(2, '0')}</div>
-                      <div className="text-xs lg:text-sm text-purple-200">SECS</div>
-                    </div>
-                  </div>
-                  
-                  <div className="text-sm text-purple-100">
-                    <p>🏆 Prize Pool: $50,000</p>
-                    <p>📍 Mode: Battle Royale</p>
-                  </div>
+    <div className="min-h-screen bg-black py-4 sm:py-6 md:py-8 lg:py-12 px-3 sm:px-4 lg:px-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Welcome Header */}
+        <div className="mb-6 sm:mb-8 md:mb-10">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-3">
+            Welcome Back, <span className="text-red-600">Champion!</span>
+          </h1>
+          <p className="text-zinc-400 text-sm sm:text-base md:text-lg">
+            {upcomingTournament ? 'Get ready for your next battle' : 'Ready to join your first tournament?'}
+          </p>
+        </div>
+
+        {/* Upcoming Tournament Countdown */}
+        {upcomingTournament ? (
+          <div className="bg-gradient-to-br from-red-950/50 to-red-900/30 border-2 border-red-600/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 shadow-2xl shadow-red-600/20">
+            <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+              <div className="p-2 sm:p-3 bg-red-600/20 rounded-lg">
+                <Trophy className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-red-400" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-red-400 text-xs sm:text-sm font-semibold mb-1">NEXT TOURNAMENT</p>
+                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white truncate">
+                  {upcomingTournament.title}
+                </h2>
+              </div>
+            </div>
+
+            {/* Countdown Timer */}
+            {timeRemaining && timeRemaining.total > 0 ? (
+              <div className="grid grid-cols-4 gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6">
+                <div className="bg-black/30 border border-red-600/30 rounded-lg p-3 sm:p-4 text-center">
+                  <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-1">
+                    {String(timeRemaining.days).padStart(2, '0')}
+                  </p>
+                  <p className="text-red-400 text-xs sm:text-sm font-medium">Days</p>
                 </div>
-                <div className="absolute top-0 right-0 w-32 h-32 lg:w-48 lg:h-48 opacity-10">
-                  <Trophy className="w-full h-full" />
+                <div className="bg-black/30 border border-red-600/30 rounded-lg p-3 sm:p-4 text-center">
+                  <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-1">
+                    {String(timeRemaining.hours).padStart(2, '0')}
+                  </p>
+                  <p className="text-red-400 text-xs sm:text-sm font-medium">Hours</p>
+                </div>
+                <div className="bg-black/30 border border-red-600/30 rounded-lg p-3 sm:p-4 text-center">
+                  <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-1">
+                    {String(timeRemaining.minutes).padStart(2, '0')}
+                  </p>
+                  <p className="text-red-400 text-xs sm:text-sm font-medium">Mins</p>
+                </div>
+                <div className="bg-black/30 border border-red-600/30 rounded-lg p-3 sm:p-4 text-center">
+                  <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-1">
+                    {String(timeRemaining.seconds).padStart(2, '0')}
+                  </p>
+                  <p className="text-red-400 text-xs sm:text-sm font-medium">Secs</p>
                 </div>
               </div>
+            ) : (
+              <div className="bg-yellow-600/20 border border-yellow-600/50 rounded-lg p-4 mb-4 sm:mb-6">
+                <p className="text-yellow-400 font-semibold text-sm sm:text-base text-center">
+                  Tournament starting soon! 🔥
+                </p>
+              </div>
+            )}
 
-              {/* Join Tournament Section */}
-              <div className="bg-gradient-to-r from-red-600 to-red-800 rounded-xl p-6 lg:p-8 relative overflow-hidden">
-                <div className="relative z-10">
-                  <h2 className="text-xl lg:text-2xl font-bold mb-2">JOIN NEW TOURNAMENT</h2>
-                  <p className="text-red-100 mb-4 text-sm lg:text-base">Compete with the best players worldwide</p>
-                  <button className="bg-white text-red-600 px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors">
-                    REGISTER NOW
+            {/* Tournament Info */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <div className="bg-black/30 rounded-lg p-3 sm:p-4">
+                <p className="text-red-400 text-xs mb-1">Prize Pool</p>
+                <p className="text-white text-base sm:text-lg md:text-xl font-bold">₹{upcomingTournament.prizePool.toLocaleString()}</p>
+              </div>
+              <div className="bg-black/30 rounded-lg p-3 sm:p-4">
+                <p className="text-red-400 text-xs mb-1">Teams</p>
+                <p className="text-white text-base sm:text-lg md:text-xl font-bold">{upcomingTournament.enrolledTeams || 0}/{upcomingTournament.maxTeams}</p>
+              </div>
+              <div className="bg-black/30 rounded-lg p-3 sm:p-4">
+                <p className="text-red-400 text-xs mb-1">Status</p>
+                <p className="text-white text-base sm:text-lg md:text-xl font-bold capitalize">{upcomingTournament.status}</p>
+              </div>
+              <div className="bg-black/30 rounded-lg p-3 sm:p-4">
+                <p className="text-red-400 text-xs mb-1">Your Rank</p>
+                <p className="text-white text-base sm:text-lg md:text-xl font-bold">{myRank ? `#${myRank}` : 'N/A'}</p>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              <button
+                onClick={() => router.push(`dashboard/leaderboard/${upcomingTournament._id}`)}
+                className="flex-1 py-3 px-4 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-all shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base"
+              >
+                <Trophy className="w-4 h-4 sm:w-5 sm:h-5" />
+                View Leaderboard
+              </button>
+              <button
+                onClick={() => router.push('/dashboard/tournament')}
+                className="flex-1 py-3 px-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg font-semibold transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
+              >
+                All Tournaments
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-10 mb-6 sm:mb-8 text-center">
+            <Trophy className="w-12 h-12 sm:w-16 sm:h-16 text-zinc-700 mx-auto mb-4" />
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">No Upcoming Tournaments</h3>
+            <p className="text-zinc-400 text-sm sm:text-base mb-6">Join a tournament to see your countdown here</p>
+            <button
+              onClick={() => router.push('/dashboard/tournaments')}
+              className="px-6 sm:px-8 py-3 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white rounded-lg font-semibold transition-all shadow-lg inline-flex items-center gap-2"
+            >
+              Browse Tournaments
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+          {/* My Team Section */}
+          <div className="lg:col-span-2">
+            <div className="bg-zinc-900 border border-zinc-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8">
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white flex items-center">
+                  <Users className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-red-500" />
+                  My Team
+                </h2>
+                {myTeam && (
+                  <button
+                    onClick={() => router.push('/dashboard/team')}
+                    className="px-3 sm:px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-all text-xs sm:text-sm flex items-center gap-2"
+                  >
+                    Manage Team
+                    <ChevronRight className="w-4 h-4" />
                   </button>
-                </div>
-                <div className="absolute top-0 right-0 w-32 h-32 lg:w-48 lg:h-48 opacity-10">
-                  <Target className="w-full h-full" />
-                </div>
+                )}
               </div>
 
-              {/* Stats Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {/* Team Info */}
-                <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-bold text-red-500">MY TEAM</h3>
-                    <button 
-                      
-                      className="bg-red-600 text-white px-3 py-1 rounded-md text-xs font-medium hover:bg-red-700 transition-colors"
+              {myTeam ? (
+                <>
+                  <div className="bg-zinc-800/50 rounded-lg p-4 sm:p-5 mb-4 sm:mb-6 border border-zinc-700">
+                    <div className="flex items-center gap-3 sm:gap-4 mb-3">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center">
+                        <Users className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white truncate">{myTeam.name}</h3>
+                        <p className="text-zinc-400 text-xs sm:text-sm">Team ID: {myTeam.teamid}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-zinc-400 text-xs sm:text-sm">Members</span>
+                      <span className="px-2 sm:px-3 py-1 bg-red-600/20 text-red-400 rounded-full text-xs sm:text-sm font-bold">
+                        {myTeam.members.length}/6
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    {myTeam.members.slice(0, 4).map((member, index) => (
+                      <div key={index} className="bg-zinc-800/30 border border-zinc-700 rounded-lg p-3 sm:p-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-600/20 rounded-full flex items-center justify-center">
+                            <span className="text-red-400 font-bold text-sm sm:text-base">{index + 1}</span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-white font-semibold text-sm sm:text-base truncate">{member.name}</p>
+                            <p className="text-zinc-500 text-xs">{member.role}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {myTeam.members.length > 4 && (
+                    <button
+                      onClick={() => router.push('/team')}
+                      className="w-full mt-4 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg font-medium transition-all text-sm flex items-center justify-center gap-2"
                     >
-                      MY TEAM
+                      View All {myTeam.members.length} Members
+                      <ChevronRight className="w-4 h-4" />
                     </button>
-                  </div>
-                  <div className="space-y-3">
-                    {teamMembers.map((member, index) => (
-                      <div key={index} className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <span className="text-2xl mr-3">{member.avatar}</span>
-                          <div>
-                            <p className="font-medium">{member.name}</p>
-                            <p className="text-xs text-gray-400">{member.role}</p>
-                          </div>
-                        </div>
-                        <span className="text-red-500 font-bold text-sm">{member.kills}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <button className="w-full mt-4 bg-red-600 text-white py-2 rounded-lg font-medium hover:bg-red-700 transition-colors">
-                    JOIN TEAM
+                  )}
+                </>
+              ) : (
+                <div className="text-center py-8 sm:py-12">
+                  <Users className="w-12 h-12 sm:w-16 sm:h-16 text-zinc-700 mx-auto mb-4" />
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-2">No Team Yet</h3>
+                  <p className="text-zinc-400 text-sm sm:text-base mb-6">Create or join a team to participate in tournaments</p>
+                  <button
+                    onClick={() => router.push('/team/create')}
+                    className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-all inline-flex items-center gap-2"
+                  >
+                    Create Team
+                    <ChevronRight className="w-5 h-5" />
                   </button>
                 </div>
+              )}
+            </div>
+          </div>
 
-                {/* Match Schedule */}
-                <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
-                  <h3 className="text-lg font-bold text-red-500 mb-4">MATCH SCHEDULE</h3>
-                  <div className="space-y-3">
-                    {matchSchedule.map((match, index) => (
-                      <div key={index} className="flex justify-between items-center py-2 border-b border-gray-700 last:border-b-0">
-                        <div>
-                          <p className="font-medium text-sm">{match.id}</p>
-                          <p className="text-xs text-gray-400">{match.map}</p>
-                        </div>
-                        <span className="text-red-500 font-bold text-sm">{match.time}</span>
-                      </div>
-                    ))}
+          {/* Quick Stats & Actions */}
+          <div className="space-y-4 sm:space-y-6">
+            {/* Stats Card */}
+            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-4 flex items-center">
+                <TrendingUp className="w-5 h-5 mr-2 text-green-500" />
+                Your Stats
+              </h3>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-3 bg-zinc-800/50 rounded-lg">
+                  <span className="text-zinc-400 text-sm">Tournaments</span>
+                  <span className="text-white font-bold text-lg">{totalTournaments}</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-zinc-800/50 rounded-lg">
+                  <span className="text-zinc-400 text-sm">Team Members</span>
+                  <span className="text-white font-bold text-lg">{myTeam?.members.length || 0}</span>
+                </div>
+                {myRank && (
+                  <div className="flex items-center justify-between p-3 bg-yellow-600/10 border border-yellow-600/30 rounded-lg">
+                    <span className="text-yellow-400 text-sm">Current Rank</span>
+                    <span className="text-white font-bold text-lg">#{myRank}</span>
                   </div>
-                </div>
+                )}
+              </div>
+            </div>
 
-                {/* Leaderboard */}
-                <div className="bg-gray-900 rounded-xl p-6 border border-gray-800 md:col-span-2 lg:col-span-1">
-                  <h3 className="text-lg font-bold text-red-500 mb-4">LEADERBOARD</h3>
-                  <div className="space-y-3">
-                    {leaderboard.map((team, index) => (
-                      <div key={index} className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <span className="text-xl mr-3">{team.badge}</span>
-                          <div>
-                            <p className="font-medium text-sm">{team.team}</p>
-                            <p className="text-xs text-gray-400">Rank #{team.rank}</p>
-                          </div>
-                        </div>
-                        <span className="text-red-500 font-bold text-sm">{team.points}</span>
-                      </div>
-                    ))}
+            {/* Quick Actions */}
+            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-4 flex items-center">
+                <Zap className="w-5 h-5 mr-2 text-yellow-500" />
+                Quick Actions
+              </h3>
+              <div className="space-y-2">
+                <button
+                  onClick={() => router.push('/dashboard/tournament')}
+                  className="w-full p-3 bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 hover:border-red-600/50 rounded-lg text-left transition-all group"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Trophy className="w-5 h-5 text-red-500" />
+                      <span className="text-white text-sm font-medium">Browse Tournaments</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-zinc-500 group-hover:text-red-500 group-hover:translate-x-1 transition-all" />
                   </div>
-                </div>
+                </button>
+                <button
+                  onClick={() => router.push('/dashboard/leaderboard')}
+                  className="w-full p-3 bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 hover:border-blue-600/50 rounded-lg text-left transition-all group"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Award className="w-5 h-5 text-blue-500" />
+                      <span className="text-white text-sm font-medium">View Leaderboards</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-zinc-500 group-hover:text-blue-500 group-hover:translate-x-1 transition-all" />
+                  </div>
+                </button>
+                <button
+                  onClick={() => router.push('/dashboard/profile')}
+                  className="w-full p-3 bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 hover:border-purple-600/50 rounded-lg text-left transition-all group"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Users className="w-5 h-5 text-purple-500" />
+                      <span className="text-white text-sm font-medium">My Profile</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-zinc-500 group-hover:text-purple-500 group-hover:translate-x-1 transition-all" />
+                  </div>
+                </button>
               </div>
-
-              {/* Additional Stats */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-gray-900 rounded-xl p-4 text-center border border-gray-800">
-                  <div className="text-2xl lg:text-3xl font-bold text-red-500 mb-1">24</div>
-                  <div className="text-xs lg:text-sm text-gray-400">Active Players</div>
-                </div>
-                <div className="bg-gray-900 rounded-xl p-4 text-center border border-gray-800">
-                  <div className="text-2xl lg:text-3xl font-bold text-red-500 mb-1">8</div>
-                  <div className="text-xs lg:text-sm text-gray-400">Teams</div>
-                </div>
-                <div className="bg-gray-900 rounded-xl p-4 text-center border border-gray-800">
-                  <div className="text-2xl lg:text-3xl font-bold text-red-500 mb-1">15</div>
-                  <div className="text-xs lg:text-sm text-gray-400">Matches</div>
-                </div>
-                <div className="bg-gray-900 rounded-xl p-4 text-center border border-gray-800">
-                  <div className="text-2xl lg:text-3xl font-bold text-red-500 mb-1">$50K</div>
-                  <div className="text-xs lg:text-sm text-gray-400">Prize Pool</div>
-                </div>
-              </div>
-            </>
-  )
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

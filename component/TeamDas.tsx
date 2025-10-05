@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { Trash2, LogOut, AlertTriangle } from "lucide-react"
 
 function TeamDas({team} : {team: any}) {
   const router = useRouter()
@@ -10,6 +11,10 @@ function TeamDas({team} : {team: any}) {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [members, setMembers] = useState(team.members || [])
   const [copiedTeamId, setCopiedTeamId] = useState<boolean>(false)
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
+  const [showLeaveModal, setShowLeaveModal] = useState<boolean>(false)
+  const [deleteLoading, setDeleteLoading] = useState<boolean>(false)
+  const [leaveLoading, setLeaveLoading] = useState<boolean>(false)
 
   const handleEdit = () => {
     if (isEditing) {
@@ -93,8 +98,124 @@ function TeamDas({team} : {team: any}) {
     }
   }
 
+  const handleDeleteTeam = async () => {
+    setDeleteLoading(true)
+    try {
+      const res = await fetch("/api/team/delete", {
+        method: "DELETE",
+      })
+
+      const data = await res.json()
+
+      if (res.ok) {
+        alert("Team deleted successfully")
+        router.push('/dashboard')
+        router.refresh()
+      } else {
+        alert(data.error || "Failed to delete team")
+      }
+    } catch (error) {
+      alert("Failed to delete team")
+    } finally {
+      setDeleteLoading(false)
+      setShowDeleteModal(false)
+    }
+  }
+
+  const handleLeaveTeam = async () => {
+    setLeaveLoading(true)
+    try {
+      const res = await fetch("/api/team/leave", {
+        method: "POST",
+      })
+
+      const data = await res.json()
+
+      if (res.ok) {
+        alert("You have left the team successfully")
+        router.push('/dashboard')
+        router.refresh()
+      } else {
+        alert(data.error || "Failed to leave team")
+      }
+    } catch (error) {
+      alert("Failed to leave team")
+    } finally {
+      setLeaveLoading(false)
+      setShowLeaveModal(false)
+    }
+  }
+
   return (
     <div className="space-y-6 p-4 sm:p-6">
+      {/* Delete Team Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gray-900 border-2 border-red-600 rounded-2xl max-w-md w-full p-6 shadow-2xl shadow-red-600/20">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-red-600/20 rounded-full flex items-center justify-center">
+                <AlertTriangle className="w-6 h-6 text-red-600" />
+              </div>
+              <h3 className="text-xl font-bold text-white">Delete Team</h3>
+            </div>
+            <p className="text-gray-300 mb-6">
+              Are you sure you want to delete <span className="font-bold text-red-500">"{teamName}"</span>? 
+              This action cannot be undone and all team data will be permanently removed.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={handleDeleteTeam}
+                disabled={deleteLoading}
+                className="flex-1 bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {deleteLoading ? "Deleting..." : "Delete Team"}
+              </button>
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                disabled={deleteLoading}
+                className="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg font-semibold transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Leave Team Modal */}
+      {showLeaveModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gray-900 border-2 border-orange-600 rounded-2xl max-w-md w-full p-6 shadow-2xl shadow-orange-600/20">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-orange-600/20 rounded-full flex items-center justify-center">
+                <LogOut className="w-6 h-6 text-orange-600" />
+              </div>
+              <h3 className="text-xl font-bold text-white">Leave Team</h3>
+            </div>
+            <p className="text-gray-300 mb-6">
+              Are you sure you want to leave <span className="font-bold text-orange-500">"{teamName}"</span>? 
+              You will need to be re-invited to join again.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={handleLeaveTeam}
+                disabled={leaveLoading}
+                className="flex-1 bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {leaveLoading ? "Leaving..." : "Leave Team"}
+              </button>
+              <button
+                onClick={() => setShowLeaveModal(false)}
+                disabled={leaveLoading}
+                className="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg font-semibold transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Team Header */}
       <div className="bg-gradient-to-r from-red-600 to-red-800 rounded-xl p-4 sm:p-6 lg:p-8">
         {/* Desktop Layout - Horizontal */}
@@ -257,12 +378,31 @@ function TeamDas({team} : {team: any}) {
               </div>
             )}
           </div>
+          
           <button 
             className="w-full mt-4 sm:mt-6 bg-red-600 text-white py-3 rounded-lg font-bold hover:bg-red-700 transition-colors text-sm sm:text-base cursor-pointer"
             onClick={navigateToAddMember}
           >
             + ADD NEW MEMBER
           </button>
+
+          {/* Team Action Buttons */}
+          <div className="mt-4 flex gap-3">
+            <button 
+              className="flex-1 bg-red-700 hover:bg-red-800 text-white py-3 rounded-lg font-bold transition-colors text-sm sm:text-base cursor-pointer flex items-center justify-center gap-2"
+              onClick={() => setShowDeleteModal(true)}
+            >
+              <Trash2 className="w-4 h-4" />
+              Delete Team
+            </button>
+            <button 
+              className="flex-1 bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-lg font-bold transition-colors text-sm sm:text-base cursor-pointer flex items-center justify-center gap-2"
+              onClick={() => setShowLeaveModal(true)}
+            >
+              <LogOut className="w-4 h-4" />
+              Leave Team
+            </button>
+          </div>
         </div>
 
         {/* Team Stats */}

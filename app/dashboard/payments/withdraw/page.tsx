@@ -247,7 +247,7 @@ export default function WithdrawMoneyPage() {
                 ₹
               </span>
               <input
-                type="number"
+                type="text"
                 value={amount}
                 onChange={(e) => {
                   setAmount(e.target.value);

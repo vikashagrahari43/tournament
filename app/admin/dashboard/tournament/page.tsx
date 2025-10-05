@@ -9,13 +9,15 @@ export default function AddTournamentForm() {
     prizePool: '',
     entryFee: '',
     maxTeams: '',
-    date: '' ,
-    time: ''
+    date: '',
+    hour: '',
+    minute: '',
+    period: 'AM'
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -23,22 +25,52 @@ export default function AddTournamentForm() {
     }));
   };
 
+  const formatTime12Hour = () => {
+    const hour = formData.hour.padStart(2, '0');
+    const minute = formData.minute.padStart(2, '0');
+    return `${hour}:${minute} ${formData.period}`;
+  };
+
   const handleSubmit = async () => {
+    // Validation
+    if (!formData.title || !formData.slogan || !formData.prizePool || !formData.entryFee || 
+        !formData.maxTeams || !formData.date || !formData.hour || !formData.minute) {
+      setMessage({ type: 'error', text: 'Please fill in all fields' });
+      return;
+    }
+
+    const hourNum = parseInt(formData.hour);
+    const minuteNum = parseInt(formData.minute);
+
+    if (hourNum < 1 || hourNum > 12) {
+      setMessage({ type: 'error', text: 'Hour must be between 1 and 12' });
+      return;
+    }
+
+    if (minuteNum < 0 || minuteNum > 59) {
+      setMessage({ type: 'error', text: 'Minute must be between 0 and 59' });
+      return;
+    }
+
     setLoading(true);
     setMessage({ type: '', text: '' });
 
     try {
+      const time = formatTime12Hour();
+
       const response = await fetch('/api/admin/tournament/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ...formData,
-          date: new Date(formData.date),    
+          title: formData.title,
+          slogan: formData.slogan,
           prizePool: Number(formData.prizePool),
           entryFee: Number(formData.entryFee),
-          maxTeams: Number(formData.maxTeams)
+          maxTeams: Number(formData.maxTeams),
+          date: new Date(formData.date),
+          time: time
         }),
       });
 
@@ -53,7 +85,9 @@ export default function AddTournamentForm() {
           entryFee: '',
           maxTeams: '',
           date: '',
-          time: ''
+          hour: '',
+          minute: '',
+          period: 'AM'
         });
       } else {
         setMessage({ 
@@ -72,7 +106,7 @@ export default function AddTournamentForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900  to-slate-900 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-900 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl shadow-2xl border border-purple-500/20 p-6 sm:p-8">
           <div className="text-center mb-8">
@@ -132,7 +166,7 @@ export default function AddTournamentForm() {
                   Prize Pool
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   name="prizePool"
                   value={formData.prizePool}
                   onChange={handleChange}
@@ -148,7 +182,7 @@ export default function AddTournamentForm() {
                   Entry Fee
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   name="entryFee"
                   value={formData.entryFee}
                   onChange={handleChange}
@@ -165,7 +199,7 @@ export default function AddTournamentForm() {
                 Maximum Teams
               </label>
               <input
-                type="number"
+                type="text"
                 name="maxTeams"
                 value={formData.maxTeams}
                 onChange={handleChange}
@@ -175,34 +209,59 @@ export default function AddTournamentForm() {
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-purple-300 mb-2">
-                  <Calendar className="w-4 h-4 inline mr-2" />
-                  Date
-                </label>
-                <input
-                  type="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-slate-700/50 border border-purple-500/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
-                />
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-purple-300 mb-2">
+                <Calendar className="w-4 h-4 inline mr-2" />
+                Date
+              </label>
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-slate-700/50 border border-purple-500/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
+              />
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-purple-300 mb-2">
-                  <Clock className="w-4 h-4 inline mr-2" />
-                  Time
-                </label>
+            <div>
+              <label className="block text-sm font-medium text-purple-300 mb-2">
+                <Clock className="w-4 h-4 inline mr-2" />
+                Time (12-hour format)
+              </label>
+              <div className="grid grid-cols-3 gap-3">
                 <input
-                  type="time"
-                  name="time"
-                  value={formData.time}
+                  type="number"
+                  name="hour"
+                  value={formData.hour}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-slate-700/50 border border-purple-500/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
+                  min="1"
+                  max="12"
+                  placeholder="HH"
+                  className="w-full px-4 py-3 bg-slate-700/50 border border-purple-500/30 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-center"
                 />
+                <input
+                  type="number"
+                  name="minute"
+                  value={formData.minute}
+                  onChange={handleChange}
+                  min="0"
+                  max="59"
+                  placeholder="MM"
+                  className="w-full px-4 py-3 bg-slate-700/50 border border-purple-500/30 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-center"
+                />
+                <select
+                  name="period"
+                  value={formData.period}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 bg-slate-700/50 border border-purple-500/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition cursor-pointer"
+                >
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
               </div>
+              <p className="text-purple-300/60 text-xs mt-2">
+                Example: 02:30 PM
+              </p>
             </div>
 
             <button
