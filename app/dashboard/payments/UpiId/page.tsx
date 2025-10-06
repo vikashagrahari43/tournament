@@ -104,7 +104,7 @@ function AddUPIId() {
         <div className="flex items-center mb-6">
           <button
             onClick={handleBack}
-            className="text-gray-400 hover:text-white mr-4 transition-colors"
+            className="text-gray-400 hover:text-white mr-4 transition-colors cursor-pointer"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -158,7 +158,7 @@ function AddUPIId() {
             <button
               type="submit"
               disabled={isLoading || !upiIdinput.trim()}
-              className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center"
+              className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center cursor-pointer"
             >
               {isLoading ? (
                 <>

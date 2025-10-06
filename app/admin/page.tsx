@@ -126,14 +126,14 @@ function LoginPage() {
           {/* Login Card */}
           <div className="bg-gray-900/50 backdrop-blur-xl border border-gray-800 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/50">
             <div className="mb-6 sm:mb-8">
-              <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Access the Tandav Esports</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Access the Admin Panel</h2>
               <p className="text-gray-400 text-sm sm:text-base">Enter your credentials to continue</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               {/* Email */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-300">Email Address</label>
+                <label className="text-sm font-medium text-gray-300">UserName</label>
                 <div className="relative group">
                   <Mail className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-500 group-focus-within:text-purple-400 transition-colors" size={18} />
                   <input

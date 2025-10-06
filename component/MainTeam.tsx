@@ -127,7 +127,7 @@ export default function MainTeam() {
       <div className="flex gap-4 justify-center">
         <button
           onClick={() => setShowJoinForm(false)}
-          className={`px-6 py-2 rounded transition ${
+          className={`px-6 py-2 rounded transition cursor-pointer ${
             !showJoinForm
               ? "bg-blue-600 text-white"
               : "bg-gray-200 text-black hover:bg-gray-300"
@@ -137,7 +137,7 @@ export default function MainTeam() {
         </button>
         <button
           onClick={() => setShowJoinForm(true)}
-          className={`px-6 py-2 rounded transition ${
+          className={`px-6 py-2 rounded transition cursor-pointer ${
             showJoinForm
               ? "bg-blue-600 text-white"
               : "bg-gray-200 text-black hover:bg-gray-300"
@@ -219,7 +219,7 @@ export default function MainTeam() {
                 <button
                   type="button"
                   onClick={() => removeMember(idx)}
-                  className="absolute -top-2 -right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs"
+                  className="absolute -top-2 -right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs cursor-pointer"
                 >
                   ✕
                 </button>

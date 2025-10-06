@@ -53,13 +53,13 @@ function ConfirmationModal({ isOpen, onClose, onConfirm, action, transaction }: 
         <div className="flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+            className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium cursor-pointer"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
-            className={`flex-1 px-4 py-2 text-white rounded-lg font-medium transition-colors ${
+            className={`flex-1 px-4 py-2 text-white rounded-lg font-medium transition-colors cursor-pointer ${
               isApprove 
                 ? 'bg-green-600 hover:bg-green-700' 
                 : 'bg-red-600 hover:bg-red-700'
@@ -198,7 +198,7 @@ export default function AdminTransactions() {
           <div className="flex gap-4 mt-6">
             <button
               onClick={() => setActiveTab("pending")}
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors cursor-pointer ${
                 activeTab === "pending"
                   ? "bg-blue-100 text-blue-700 border border-blue-200"
                   : "bg-gray-50 text-gray-600 hover:bg-gray-100"
@@ -214,7 +214,7 @@ export default function AdminTransactions() {
             </button>
             <button
               onClick={() => setActiveTab("all")}
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors cursor-pointer ${
                 activeTab === "all"
                   ? "bg-blue-100 text-blue-700 border border-blue-200"
                   : "bg-gray-50 text-gray-600 hover:bg-gray-100"
@@ -320,7 +320,7 @@ export default function AdminTransactions() {
                       <div className="flex gap-2">
                         <button
                           onClick={() => setSelected(d)}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm font-medium"
+                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm font-medium cursor-pointer"
                         >
                           <Eye className="w-4 h-4" />
                           View
@@ -329,14 +329,14 @@ export default function AdminTransactions() {
                           <>
                             <button
                               onClick={() => showConfirmation(d, "approve")}
-                              className="inline-flex items-center gap-1 px-3 py-1.5 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors text-sm font-medium"
+                              className="inline-flex items-center gap-1 px-3 py-1.5 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors text-sm font-medium cursor-pointer"
                             >
                               <Check className="w-4 h-4" />
                               Approve
                             </button>
                             <button
                               onClick={() => showConfirmation(d, "reject")}
-                              className="inline-flex items-center gap-1 px-3 py-1.5 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium"
+                              className="inline-flex items-center gap-1 px-3 py-1.5 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium cursor-pointer"
                             >
                               <X className="w-4 h-4" />
                               Reject
@@ -389,7 +389,7 @@ export default function AdminTransactions() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setSelected(d)}
-                    className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm font-medium"
+                    className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm font-medium cursor-pointer"
                   >
                     <Eye className="w-4 h-4" />
                     View Details
@@ -398,13 +398,13 @@ export default function AdminTransactions() {
                     <>
                       <button
                         onClick={() => showConfirmation(d, "approve")}
-                        className="px-3 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors"
+                        className="px-3 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors cursor-pointer"
                       >
                         <Check className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => showConfirmation(d, "reject")}
-                        className="px-3 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors"
+                        className="px-3 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors cursor-pointer"
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -436,7 +436,7 @@ export default function AdminTransactions() {
                 <h3 className="text-xl font-bold text-gray-900">Transaction Details</h3>
                 <button
                   onClick={() => setSelected(null)}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
                 >
                   <X className="w-5 h-5 text-gray-500" />
                 </button>
@@ -507,14 +507,14 @@ export default function AdminTransactions() {
                 <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
                   <button
                     onClick={() => showConfirmation(selected, "approve")}
-                    className="flex-1 inline-flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700 transition-colors font-medium"
+                    className="flex-1 inline-flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700 transition-colors font-medium cursor-pointer"
                   >
                     <Check className="w-5 h-5" />
                     Approve Transaction
                   </button>
                   <button
                     onClick={() => showConfirmation(selected, "reject")}
-                    className="flex-1 inline-flex items-center justify-center gap-2 bg-red-600 text-white px-6 py-3 rounded-xl hover:bg-red-700 transition-colors font-medium"
+                    className="flex-1 inline-flex items-center justify-center gap-2 bg-red-600 text-white px-6 py-3 rounded-xl hover:bg-red-700 transition-colors font-medium cursor-pointer"
                   >
                     <X className="w-5 h-5" />
                     Reject Transaction

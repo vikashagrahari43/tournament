@@ -222,7 +222,7 @@ export default function TournamentDetailsPage() {
           <p className="text-zinc-400 text-sm sm:text-base mb-6">{error || 'Unable to load tournament details'}</p>
           <button
             onClick={() => router.push('/admin/tournaments')}
-            className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors"
+            className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors cursor-pointer"
           >
             Back to Tournaments
           </button>
@@ -240,7 +240,7 @@ export default function TournamentDetailsPage() {
         {/* Back Button */}
         <button
           onClick={() => router.back()}
-          className="mb-4 sm:mb-6 flex items-center text-zinc-400 hover:text-white transition-colors group"
+          className="mb-4 sm:mb-6 flex items-center text-zinc-400 hover:text-white transition-colors group cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
           <span className="text-sm sm:text-base">Back to Tournaments</span>
@@ -320,7 +320,7 @@ export default function TournamentDetailsPage() {
               <button
                 onClick={() => handleSendPrize(winnerTeam)}
                 disabled={sendingPrize || prizeSuccess || moneySent}
-                className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900 text-white rounded-lg font-semibold transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900 text-white rounded-lg font-semibold transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base cursor-pointer" 
               >
                 {sendingPrize ? (
                   <>
@@ -394,7 +394,7 @@ export default function TournamentDetailsPage() {
                     <div className="flex gap-2 w-full sm:w-auto">
                       <button
                         onClick={() => handleTeamClick(participant.teamId)}
-                        className="flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-zinc-700 hover:bg-zinc-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm"
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-zinc-700 hover:bg-zinc-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm cursor-pointer"
                       >
                         <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         <span>View</span>
@@ -402,7 +402,7 @@ export default function TournamentDetailsPage() {
                       
                       <button
                         onClick={() => handleEditMatchpoints(participant)}
-                        className="flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm"
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm cursor-pointer"
                       >
                         <Edit className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         <span>Edit</span>
@@ -426,7 +426,7 @@ export default function TournamentDetailsPage() {
                 <span className="line-clamp-1">Update Points</span>
               </h3>
               {!updating && !updateSuccess && (
-                <button onClick={closeEditModal} className="text-zinc-500 hover:text-white flex-shrink-0 ml-2">
+                <button onClick={closeEditModal} className="text-zinc-500 hover:text-white flex-shrink-0 ml-2 cursor-pointer">
                   <X className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
               )}
@@ -476,14 +476,14 @@ export default function TournamentDetailsPage() {
                 <button
                   onClick={closeEditModal}
                   disabled={updating}
-                  className="w-full sm:flex-1 py-2.5 sm:py-3 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 text-sm sm:text-base"
+                  className="w-full sm:flex-1 py-2.5 sm:py-3 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 text-sm sm:text-base cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleUpdateMatchpoints}
                   disabled={updating}
-                  className="w-full sm:flex-1 py-2.5 sm:py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2 text-sm sm:text-base"
+                  className="w-full sm:flex-1 py-2.5 sm:py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2 text-sm sm:text-base cursor-pointer"
                 >
                   {updating ? (
                     <>

@@ -99,7 +99,7 @@ export default function AdminAllTeams() {
           <p className="text-gray-400 mb-4 text-sm sm:text-base">{error}</p>
           <button 
             onClick={fetchTeams}
-            className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm sm:text-base"
+            className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm sm:text-base cursor-pointer"
           >
             Retry
           </button>
@@ -200,7 +200,7 @@ export default function AdminAllTeams() {
                         </div>
                       </div>
                     </div>
-                    <button className="p-2 hover:bg-gray-700/50 rounded-lg transition-colors flex-shrink-0">
+                    <button className="p-2 hover:bg-gray-700/50 rounded-lg transition-colors flex-shrink-0 cursor-pointer">
                       {expandedTeam === team._id ? (
                         <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400" />
                       ) : (

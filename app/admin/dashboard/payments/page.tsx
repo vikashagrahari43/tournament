@@ -22,14 +22,14 @@ export default function AdminPaymentOptions() {
         <div className="space-y-3 sm:space-y-4 md:space-y-5">
           <button
             onClick={handleDeposit}
-            className="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-3 sm:py-4 md:py-5 px-4 sm:px-6 md:px-8 rounded-lg transition duration-200 ease-in-out transform hover:scale-105 active:scale-95 shadow-md text-sm sm:text-base md:text-lg"
+            className="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-3 sm:py-4 md:py-5 px-4 sm:px-6 md:px-8 rounded-lg transition duration-200 ease-in-out transform hover:scale-105 active:scale-95 shadow-md text-sm sm:text-base md:text-lg cursor-pointer"
           >
             Deposit
           </button>
           
           <button
             onClick={handleWithdraw}
-            className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold py-3 sm:py-4 md:py-5 px-4 sm:px-6 md:px-8 rounded-lg transition duration-200 ease-in-out transform hover:scale-105 active:scale-95 shadow-md text-sm sm:text-base md:text-lg"
+            className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold py-3 sm:py-4 md:py-5 px-4 sm:px-6 md:px-8 rounded-lg transition duration-200 ease-in-out transform hover:scale-105 active:scale-95 shadow-md text-sm sm:text-base md:text-lg cursor-pointer"
           >
             Withdraw
           </button>

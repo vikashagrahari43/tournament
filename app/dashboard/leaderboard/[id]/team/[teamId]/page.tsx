@@ -111,7 +111,7 @@ export default function UserTeamDetailsPage() {
           <p className="text-zinc-400 text-sm sm:text-base mb-6">{error || 'Unable to load team details'}</p>
           <button
             onClick={() => router.push(`/dashboard/leaderboard/${tournamentId}`)}
-            className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors text-sm sm:text-base"
+            className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors text-sm sm:text-base cursor-pointer"
           >
             Back to Leaderboard
           </button>
@@ -126,7 +126,7 @@ export default function UserTeamDetailsPage() {
         {/* Back Button */}
         <button
           onClick={() => router.back()}
-          className="mb-4 sm:mb-6 flex items-center text-zinc-400 hover:text-white transition-colors group"
+          className="mb-4 sm:mb-6 flex items-center text-zinc-400 hover:text-white transition-colors group cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
           <span className="text-sm sm:text-base">Back to Leaderboard</span>

@@ -173,7 +173,7 @@ export default function UserProfilePage() {
           <p className="text-zinc-400 text-sm sm:text-base mb-6">{error}</p>
           <button
             onClick={() => router.push('/')}
-            className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors text-sm sm:text-base"
+            className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors text-sm sm:text-base cursor-pointer"
           >
             Go Home
           </button>
@@ -252,7 +252,7 @@ export default function UserProfilePage() {
             {/* Change Password */}
             <button
               onClick={() => setShowPasswordModal(true)}
-              className="w-full bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 hover:border-red-600/50 rounded-lg p-4 sm:p-5 transition-all group text-left"
+              className="w-full bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 hover:border-red-600/50 rounded-lg p-4 sm:p-5 transition-all group text-left cursor-pointer"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3 sm:gap-4">
@@ -271,7 +271,7 @@ export default function UserProfilePage() {
             {/* Admin Profile */}
             <button
               onClick={() => router.push('/dashboard/support')}
-              className="w-full bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 hover:border-red-600/50 rounded-lg p-4 sm:p-5 transition-all group text-left"
+              className="w-full bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 hover:border-red-600/50 rounded-lg p-4 sm:p-5 transition-all group text-left cursor-pointer"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3 sm:gap-4">
@@ -300,7 +300,7 @@ export default function UserProfilePage() {
             {/* Delete Account */}
             <button
               onClick={() => setShowDeleteModal(true)}
-              className="w-full bg-red-950/30 hover:bg-red-950/50 border border-red-900/50 hover:border-red-600 rounded-lg p-4 sm:p-5 transition-all group text-left"
+              className="w-full bg-red-950/30 hover:bg-red-950/50 border border-red-900/50 hover:border-red-600 rounded-lg p-4 sm:p-5 transition-all group text-left cursor-pointer"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3 sm:gap-4">
@@ -329,7 +329,7 @@ export default function UserProfilePage() {
                 Change Password
               </h3>
               {!changingPassword && !passwordSuccess && (
-                <button onClick={closePasswordModal} className="text-zinc-500 hover:text-white">
+                <button onClick={closePasswordModal} className="text-zinc-500 hover:text-white cursor-pointer">
                   <X className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
               )}
@@ -361,7 +361,7 @@ export default function UserProfilePage() {
                       <button
                         type="button"
                         onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white transition-colors"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white transition-colors cursor-pointer"
                       >
                         {showCurrentPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                       </button>
@@ -385,7 +385,7 @@ export default function UserProfilePage() {
                       <button
                         type="button"
                         onClick={() => setShowNewPassword(!showNewPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white transition-colors"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white transition-colors cursor-pointer"
                       >
                         {showNewPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                       </button>
@@ -410,7 +410,7 @@ export default function UserProfilePage() {
                       <button
                         type="button"
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white transition-colors"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white transition-colors cursor-pointer"
                       >
                         {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                       </button>
@@ -432,14 +432,14 @@ export default function UserProfilePage() {
                 <button
                   onClick={closePasswordModal}
                   disabled={changingPassword}
-                  className="w-full sm:flex-1 py-2.5 sm:py-3 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 text-sm sm:text-base"
+                  className="w-full sm:flex-1 py-2.5 sm:py-3 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 text-sm sm:text-base cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleChangePassword}
                   disabled={changingPassword}
-                  className="w-full sm:flex-1 py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2 text-sm sm:text-base"
+                  className="w-full sm:flex-1 py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2 text-sm sm:text-base cursor-pointer"
                 >
                   {changingPassword ? (
                     <>
@@ -467,7 +467,7 @@ export default function UserProfilePage() {
               </h3>
               {!deleting && (
                 <button onClick={closeDeleteModal} className="text-zinc-500 hover:text-white">
-                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <X className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />
                 </button>
               )}
             </div>
@@ -517,14 +517,14 @@ export default function UserProfilePage() {
               <button
                 onClick={closeDeleteModal}
                 disabled={deleting}
-                className="w-full sm:flex-1 py-2.5 sm:py-3 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 text-sm sm:text-base"
+                className="w-full sm:flex-1 py-2.5 sm:py-3 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 text-sm sm:text-base cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDeleteAccount}
                 disabled={deleting}
-                className="w-full sm:flex-1 py-2.5 sm:py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2 text-sm sm:text-base"
+                className="w-full sm:flex-1 py-2.5 sm:py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2 text-sm sm:text-base cursor-pointer"
               >
                 {deleting ? (
                   <>

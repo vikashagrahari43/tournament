@@ -379,7 +379,7 @@ export default function AdminTournaments() {
               {!updating && !updateSuccess && (
                 <button
                   onClick={closeModal}
-                  className="text-zinc-500 hover:text-white transition-colors flex-shrink-0 ml-2"
+                  className="text-zinc-500 hover:text-white transition-colors flex-shrink-0 ml-2 cursor-pointer"
                 >
                   <X className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
@@ -437,7 +437,7 @@ export default function AdminTournaments() {
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white transition-colors"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white transition-colors cursor-pointer"
                       >
                         {showPassword ? (
                           <EyeOff className="w-5 h-5" />
@@ -473,14 +473,14 @@ export default function AdminTournaments() {
                 <button
                   onClick={closeModal}
                   disabled={updating}
-                  className="w-full sm:flex-1 py-2.5 sm:py-3 px-4 bg-zinc-800 text-white rounded-lg font-semibold hover:bg-zinc-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+                  className="w-full sm:flex-1 py-2.5 sm:py-3 px-4 bg-zinc-800 text-white rounded-lg font-semibold hover:bg-zinc-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleUpdateRoom}
                   disabled={updating}
-                  className="w-full sm:flex-1 py-2.5 sm:py-3 px-4 bg-gradient-to-r from-red-600 to-red-800 text-white rounded-lg font-semibold hover:from-red-700 hover:to-red-900 transition-all shadow-lg shadow-red-600/30 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-sm sm:text-base"
+                  className="w-full sm:flex-1 py-2.5 sm:py-3 px-4 bg-gradient-to-r from-red-600 to-red-800 text-white rounded-lg font-semibold hover:from-red-700 hover:to-red-900 transition-all shadow-lg shadow-red-600/30 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-sm sm:text-base cursor-pointer"
                 >
                   {updating ? (
                     <>

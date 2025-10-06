@@ -110,7 +110,7 @@ export const PaymentScreenshotPage = () => {
                     </p>
                     <button
                       onClick={() => setScreenshot(null)}
-                      className="text-red-400 hover:text-red-300 text-xs sm:text-sm underline"
+                      className="text-red-400 hover:text-red-300 text-xs sm:text-sm underline cursor-pointer"
                     >
                       Remove file
                     </button>
@@ -136,7 +136,7 @@ export const PaymentScreenshotPage = () => {
             <button
               onClick={handleSubmit}
               disabled={!screenshot || isSubmitting}
-              className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg transition-colors flex items-center justify-center"
+              className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg transition-colors flex items-center justify-center cursor-pointer"
             >
               {isSubmitting ? (
                 <>
@@ -151,7 +151,7 @@ export const PaymentScreenshotPage = () => {
             {/* Back Button */}
             <button
               onClick={handleBack}
-              className="w-full mt-3 bg-gray-700 hover:bg-gray-600 text-white py-2 rounded-lg font-medium text-sm sm:text-base"
+              className="w-full mt-3 bg-gray-700 hover:bg-gray-600 text-white py-2 rounded-lg font-medium text-sm sm:text-base cursor-pointer"
             >
               Back
             </button>

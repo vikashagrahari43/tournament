@@ -95,7 +95,7 @@ export default function AllTransactionsPage() {
         <div className="mb-6">
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4"
+            className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4 cursor-pointer"
           >
             <ArrowLeft className="w-5 h-5" />
             <span>Back</span>
@@ -191,7 +191,7 @@ export default function AllTransactionsPage() {
                   setFilterType('all');
                   setFilterStatus('all');
                 }}
-                className="text-sm text-gray-400 hover:text-white transition-colors"
+                className="cursor-pointer text-sm text-gray-400 hover:text-white transition-colors"
               >
                 Clear Filters
               </button>

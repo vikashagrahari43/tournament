@@ -192,7 +192,7 @@ export default function UserLeaderboardList() {
             </p>
             <button
               onClick={() => router.push('/dashboard/tournament')}
-              className="px-6 sm:px-8 py-3 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white rounded-lg font-semibold transition-all shadow-lg shadow-red-600/30 text-sm sm:text-base"
+              className="px-6 sm:px-8 py-3 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white rounded-lg font-semibold transition-all shadow-lg shadow-red-600/30 text-sm sm:text-base cursor-pointer"
             >
               Browse Tournaments
             </button>
@@ -205,7 +205,7 @@ export default function UserLeaderboardList() {
                 <button
                   key={tournament._id}
                   onClick={() => handleTournamentClick(tournament._id)}
-                  className="bg-zinc-900 border border-zinc-800 rounded-xl sm:rounded-2xl overflow-hidden hover:border-red-600/50 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-red-600/20 text-left group"
+                  className="bg-zinc-900 border border-zinc-800 rounded-xl sm:rounded-2xl overflow-hidden hover:border-red-600/50 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-red-600/20 text-left group cursor-pointer"
                 >
                   {/* Card Header */}
                   <div className="bg-gradient-to-r from-red-600/10 to-red-800/10 p-4 sm:p-5 md:p-6 border-b border-zinc-800">

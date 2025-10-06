@@ -218,19 +218,19 @@ const DummyContent = () => {
   const developers: Developer[] = [
     {
       name: "Arjun Sharma",
-      role: "Lead Developer",
+      role: "Tournament Manager",
       image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face&auto=format",
       tech: "TOURNAMENT MANAGER "
     },
     {
       name: "Vikash Agrahari",
-      role: "Website designer",
+      role: "Full Stack Developer",
       image: "/vikash.jpg",
-      tech: "WEBSITE Developer"
+      tech: "WEBSITE DEVELOPER"
     },
     {
       name: "Amresh Yadav",
-      role: "Tournament Head",
+      role: "Tournament Admin",
       image: "/amresh.png",
       tech: "TOURNAMENT ADMIN"
     }
@@ -339,13 +339,13 @@ const DummyContent = () => {
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 lg:my-7 mt-6">
-            <button onClick={() => {}} className="w-full sm:w-auto shadow-[inset_0_0_0_2px_#616467] text-white px-8 sm:px-12 py-3 rounded tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200 cursor-pointer">
             <Link href="/register">
+            <button onClick={() => {}} className="w-full sm:w-auto shadow-[inset_0_0_0_2px_#616467] text-white px-8 sm:px-12 py-3 rounded tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200 cursor-pointer">
               Join Now
-            </Link>
             </button>
+            </Link>
 
-            <button className="w-full sm:w-auto hover:bg-green-500 bg-blue-500 cursor-pointer text-white px-8 sm:px-12 py-3 rounded">
+            <button className="w-full sm:w-auto hover:bg-green-500 bg-blue-500 cursor-pointer text-white px-8 sm:px-12 py-3 rounded ">
               <a href="www.youtube.com" target="_blank" rel="noopener noreferrer">
                 Watch Live
               </a>
@@ -446,18 +446,18 @@ const DummyContent = () => {
                         <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
                         {tournament.date}
                       </div>
+                      <Link href="/register">
                       <button 
-                        className={`px-3 py-2 sm:px-4 sm:py-2 text-xs sm:text-sm rounded-lg transition-all border ${
+                        className={`px-3 py-2 sm:px-4 sm:py-2 text-xs sm:text-sm rounded-lg transition-all border cursor-pointer ${
                           tournament.status === 'full' || tournament.status === 'completed'
                             ? 'bg-gray-500/20 border-gray-500/30 cursor-not-allowed opacity-50'
                             : 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-purple-500/30 hover:from-purple-500/30 hover:to-pink-500/30'
                         }`}
                         disabled={tournament.status === 'full' || tournament.status === 'completed'}
                       >
-                        <Link href="/register">
                         {tournament.status === 'completed' ? 'Completed' : tournament.status === 'full' ? 'Full' : 'Register'}
-                        </Link>
                       </button>
+                        </Link>
                     </div>
                   </div>
                 </div>
@@ -504,11 +504,11 @@ const DummyContent = () => {
           </div>
 
           <div className="text-center mt-6 sm:mt-8">
-            <button className="px-4 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-lg hover:from-purple-500/30 hover:to-pink-500/30 transition-all border border-purple-500/30">
             <Link href="/rulebook.pdf" target="_blank" rel="noopener noreferrer">
+            <button className="px-4 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-lg hover:from-purple-500/30 hover:to-pink-500/30 transition-all border border-purple-500/30 cursor-pointer">
               Download Complete Rulebook
-            </Link>
             </button>
+            </Link>
           </div>
         </div>
       </section> 
@@ -563,13 +563,13 @@ const DummyContent = () => {
               Join thousands of BGMI and Free Fire players competing for massive prize pools. 
               Your mobile gaming legend starts here.
             </p>
+              <Link href="/admin">
             <button className="group w-full sm:w-auto px-8 sm:px-10 lg:px-12 py-3 sm:py-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl text-lg sm:text-xl font-bold hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 flex items-center justify-center mx-auto cursor-pointer">
               <Star className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 group-hover:animate-spin" />
-              <Link href="/register">
-              Start Your Journey
-              </Link>
+              Admin Panel
               <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 ml-2 sm:ml-3 group-hover:translate-x-2 transition-transform" />
             </button>
+              </Link>
           </div>
         </div>
       </section>
@@ -592,14 +592,14 @@ const DummyContent = () => {
       <p className="mb-2">© 2025 Tandav Gaming. All rights reserved.</p>
       <p>
         Made with <span className="text-red-500">❤️</span> by{' '}
-        <a 
+        <Link 
           href="https://www.vikashagrahari.me/" 
           target="_blank" 
           rel="noopener noreferrer"
           className="text-purple-400 hover:text-purple-300 transition-colors font-medium"
         >
           Vikash Agrahari
-        </a>
+        </Link>
       </p>
     </div>
   </div>

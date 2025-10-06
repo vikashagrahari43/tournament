@@ -103,28 +103,21 @@ function SupportDas() {
 
           {/* Additional Help Section */}
           <div className="bg-gray-900 rounded-lg sm:rounded-xl p-4 sm:p-6 border border-gray-800">
-            <h3 className="text-lg sm:text-xl font-bold text-red-500 mb-3 sm:mb-4">QUICK LINKS</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-              <div className="bg-gray-800 rounded-lg p-4 text-center hover:bg-gray-700 transition-colors cursor-pointer">
+            <h3 className="text-lg sm:text-xl font-bold text-red-500 mb-3 sm:mb-4">QUICK LINK</h3>
+
+              <a href="/rulebook.pdf" target='_blank' rel="noopener noreferrer">
+              <div className="bg-gray-800 rounded-lg p-4 text-center hover:bg-gray-700 transition-colors cursor-pointer"
+              >
                 <span className="text-2xl sm:text-3xl mb-2 block">📖</span>
                 <p className="font-bold text-xs sm:text-sm">Documentation</p>
                 <p className="text-xs text-gray-400 mt-1">Read our guides</p>
               </div>
-              <div className="bg-gray-800 rounded-lg p-4 text-center hover:bg-gray-700 transition-colors cursor-pointer">
-                <span className="text-2xl sm:text-3xl mb-2 block">🎮</span>
-                <p className="font-bold text-xs sm:text-sm">Game Rules</p>
-                <p className="text-xs text-gray-400 mt-1">Tournament regulations</p>
-              </div>
-              <div className="bg-gray-800 rounded-lg p-4 text-center hover:bg-gray-700 transition-colors cursor-pointer">
-                <span className="text-2xl sm:text-3xl mb-2 block">💡</span>
-                <p className="font-bold text-xs sm:text-sm">Tips & Tricks</p>
-                <p className="text-xs text-gray-400 mt-1">Improve your gameplay</p>
-              </div>
+              </a>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    
   );
 }
 

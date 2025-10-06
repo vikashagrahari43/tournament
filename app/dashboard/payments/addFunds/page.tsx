@@ -37,7 +37,7 @@ export const AddFundsPage = () => {
     return (
       <div className="w-full max-w-48 h-48 bg-white p-4 rounded-lg mx-auto">
         <img 
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png" 
+          src="/qr.jpg" 
           alt="QR Code" 
           className="w-full h-full object-contain"
         />
@@ -55,7 +55,7 @@ export const AddFundsPage = () => {
         <div className="mb-6 sm:mb-8">
           <button 
             onClick={handleBack}
-            className="flex items-center text-gray-400 hover:text-white mb-4 transition-colors"
+            className="flex items-center text-gray-400 hover:text-white mb-4 transition-colors cursor-pointer"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -91,7 +91,7 @@ export const AddFundsPage = () => {
                     <button
                       key={quickAmount}
                       onClick={() => setAmount(quickAmount.toString())}
-                      className="bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-green-500 text-white py-2 sm:py-3 rounded-lg transition-colors text-sm sm:text-base"
+                      className="bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-green-500 text-white py-2 sm:py-3 rounded-lg transition-colors text-sm sm:text-base cursor-pointer"
                     >
                       ₹{quickAmount}
                     </button>
@@ -151,7 +151,7 @@ export const AddFundsPage = () => {
               <button
                 onClick={handleAddFunds}
                 disabled={!amount || parseFloat(amount) <= 0}
-                className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg transition-colors"
+                className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg transition-colors cursor-pointer" 
               >
                 I Have Completed Payment
               </button>

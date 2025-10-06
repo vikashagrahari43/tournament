@@ -256,14 +256,14 @@ export default function UserHomePage() {
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               <button
                 onClick={() => router.push(`dashboard/leaderboard/${upcomingTournament._id}`)}
-                className="flex-1 py-3 px-4 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-all shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base"
+                className="flex-1 py-3 px-4 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-all shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base cursor-pointer"
               >
                 <Trophy className="w-4 h-4 sm:w-5 sm:h-5" />
                 View Leaderboard
               </button>
               <button
                 onClick={() => router.push('/dashboard/tournament')}
-                className="flex-1 py-3 px-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg font-semibold transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
+                className="flex-1 py-3 px-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg font-semibold transition-all flex items-center justify-center gap-2 text-sm sm:text-base cursor-pointer"
               >
                 All Tournaments
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -276,8 +276,8 @@ export default function UserHomePage() {
             <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">No Upcoming Tournaments</h3>
             <p className="text-zinc-400 text-sm sm:text-base mb-6">Join a tournament to see your countdown here</p>
             <button
-              onClick={() => router.push('/dashboard/tournaments')}
-              className="px-6 sm:px-8 py-3 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white rounded-lg font-semibold transition-all shadow-lg inline-flex items-center gap-2"
+              onClick={() => router.push('/dashboard/tournament')}
+              className="px-6 sm:px-8 py-3 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white rounded-lg font-semibold transition-all shadow-lg inline-flex items-center gap-2 cursor-pointer"
             >
               Browse Tournaments
               <ChevronRight className="w-5 h-5" />
@@ -297,7 +297,7 @@ export default function UserHomePage() {
                 {myTeam && (
                   <button
                     onClick={() => router.push('/dashboard/team')}
-                    className="px-3 sm:px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-all text-xs sm:text-sm flex items-center gap-2"
+                    className="px-3 sm:px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-all text-xs sm:text-sm flex items-center gap-2 cursor-pointer"
                   >
                     Manage Team
                     <ChevronRight className="w-4 h-4" />
@@ -344,7 +344,7 @@ export default function UserHomePage() {
                   {myTeam.members.length > 4 && (
                     <button
                       onClick={() => router.push('/team')}
-                      className="w-full mt-4 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg font-medium transition-all text-sm flex items-center justify-center gap-2"
+                      className="w-full mt-4 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg font-medium transition-all text-sm flex items-center justify-center gap-2 cursor-pointer"
                     >
                       View All {myTeam.members.length} Members
                       <ChevronRight className="w-4 h-4" />
@@ -357,8 +357,8 @@ export default function UserHomePage() {
                   <h3 className="text-lg sm:text-xl font-bold text-white mb-2">No Team Yet</h3>
                   <p className="text-zinc-400 text-sm sm:text-base mb-6">Create or join a team to participate in tournaments</p>
                   <button
-                    onClick={() => router.push('/team/create')}
-                    className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-all inline-flex items-center gap-2"
+                    onClick={() => router.push('/dashboard/team')}
+                    className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-all inline-flex items-center gap-2 cursor-pointer"
                   >
                     Create Team
                     <ChevronRight className="w-5 h-5" />
@@ -403,7 +403,7 @@ export default function UserHomePage() {
               <div className="space-y-2">
                 <button
                   onClick={() => router.push('/dashboard/tournament')}
-                  className="w-full p-3 bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 hover:border-red-600/50 rounded-lg text-left transition-all group"
+                  className="w-full p-3 bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 hover:border-red-600/50 rounded-lg text-left transition-all group cursor-pointer"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -415,7 +415,7 @@ export default function UserHomePage() {
                 </button>
                 <button
                   onClick={() => router.push('/dashboard/leaderboard')}
-                  className="w-full p-3 bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 hover:border-blue-600/50 rounded-lg text-left transition-all group"
+                  className="w-full p-3 bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 hover:border-blue-600/50 rounded-lg text-left transition-all group cursor-pointer"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -427,7 +427,7 @@ export default function UserHomePage() {
                 </button>
                 <button
                   onClick={() => router.push('/dashboard/profile')}
-                  className="w-full p-3 bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 hover:border-purple-600/50 rounded-lg text-left transition-all group"
+                  className="w-full p-3 bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 hover:border-purple-600/50 rounded-lg text-left transition-all group cursor-pointer"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">

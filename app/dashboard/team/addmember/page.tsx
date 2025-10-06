@@ -222,7 +222,7 @@ function AddMember() {
                       key={suggestedRole}
                       type="button"
                       onClick={() => setFormData(prev => ({ ...prev, role: suggestedRole }))}
-                      className="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 px-2 py-1 rounded transition-colors"
+                      className="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 px-2 py-1 rounded transition-colors cursor-pointer"
                       disabled={isLoading}
                     >
                       {suggestedRole}

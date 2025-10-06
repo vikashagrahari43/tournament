@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Trophy, Calendar, Clock, DollarSign, Users, Crown, AlertCircle, Loader2, CheckCircle, XCircle, Package } from 'lucide-react';
-
+import { useRouter } from 'next/navigation';
 interface Tournament {
   _id: string;
   title: string;
@@ -31,7 +31,8 @@ export default function MyTournaments() {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
-
+  
+  const router = useRouter();
   useEffect(() => {
     fetchMyTournaments();
   }, []);
@@ -159,8 +160,8 @@ export default function MyTournaments() {
               You haven't enrolled in any tournaments yet. Browse available tournaments and join one to get started!
             </p>
             <button
-              onClick={() => window.location.href = '/dashboard/tournament'}
-              className="px-6 sm:px-8 py-3 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white rounded-lg font-semibold transition-all shadow-lg shadow-red-600/30"
+              onClick={() => router.push('/dashboard/tournament')}
+              className="px-6 sm:px-8 py-3 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white rounded-lg font-semibold transition-all shadow-lg shadow-red-600/30 cursor-pointer"
             >
               Browse Tournaments
             </button>

@@ -16,16 +16,17 @@ import {
   Wallet,
 } from 'lucide-react';
 
+import { signOut } from 'next-auth/react';
+
 const AdminDashboard = ({ children }: { children: React.ReactNode }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
   const handleLogout = () => {
-    // Add logout logic here
+   
     if (window.confirm('Are you sure you want to logout?')) {
-      // In a real app, you would clear tokens, redirect to login, etc.
-      router.push('/login'); // or wherever your login page is
+      signOut({ callbackUrl: '/admin' });
     }
   };
 
@@ -78,7 +79,7 @@ const AdminDashboard = ({ children }: { children: React.ReactNode }) => {
           {/* Close button for mobile */}
           <button 
             onClick={() => setSidebarOpen(false)}
-            className="absolute top-4 right-4 lg:hidden text-gray-400 hover:text-white"
+            className="absolute top-4 right-4 lg:hidden text-gray-400 hover:text-white cursor-pointer"
           >
             <X className="w-6 h-6" />
           </button>
@@ -108,7 +109,7 @@ const AdminDashboard = ({ children }: { children: React.ReactNode }) => {
           <div className="border-t border-gray-700 pt-4">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-red-600 transition-all duration-200"
+              className="w-full flex items-center px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-red-600 transition-all duration-200 cursor-pointer"
             >
               <LogOut className="w-5 h-5 mr-3" />
               <span className="text-sm font-medium">Logout</span>
@@ -124,7 +125,7 @@ const AdminDashboard = ({ children }: { children: React.ReactNode }) => {
           <div className="flex items-center justify-between">
             <button 
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden text-gray-400 hover:text-white"
+              className="lg:hidden text-gray-400 hover:text-white cursor-pointer"
             >
               <Menu className="w-6 h-6" />
             </button>
@@ -139,7 +140,7 @@ const AdminDashboard = ({ children }: { children: React.ReactNode }) => {
             {/* Logout button for desktop */}
             <button
               onClick={handleLogout}
-              className="hidden lg:flex items-center px-4 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-red-600 transition-all duration-200"
+              className="hidden lg:flex items-center px-4 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-red-600 transition-all duration-200 cursor-pointer"
             >
               <LogOut className="w-5 h-5 mr-2" />
               <span className="text-sm font-medium">Logout</span>

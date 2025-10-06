@@ -147,7 +147,7 @@ function PaymentDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <button 
             onClick={navigateToAddFunds}
-            className="bg-green-600 hover:bg-green-700 text-white p-6 rounded-xl text-center transition-colors border-2 border-transparent hover:border-green-400"
+            className="bg-green-600 hover:bg-green-700 text-white p-6 rounded-xl text-center transition-colors border-2 border-transparent hover:border-green-400 cursor-pointer"
           >
             <div className="text-4xl mb-3">💳</div>
             <h3 className="text-xl font-bold mb-2">Add Funds</h3>
@@ -155,7 +155,7 @@ function PaymentDashboard() {
           </button>
           <button 
             onClick={navigateToWithdraw}
-            className="bg-blue-600 hover:bg-blue-700 text-white p-6 rounded-xl text-center transition-colors border-2 border-transparent hover:border-blue-400"
+            className="bg-blue-600 hover:bg-blue-700 text-white p-6 rounded-xl text-center transition-colors border-2 border-transparent hover:border-blue-400 cursor-pointer"
           >
             <div className="text-4xl mb-3">💰</div>
             <h3 className="text-xl font-bold mb-2">Withdraw Money</h3>
@@ -185,7 +185,7 @@ function PaymentDashboard() {
                         type="button"
                         onClick={handleDelete}
                         disabled={isLoading}
-                        className="w-full mt-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white font-semibold py-2 sm:py-3 px-3 sm:px-4 rounded-lg transition-colors flex items-center justify-center text-sm sm:text-base"
+                        className="w-full mt-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white font-semibold py-2 sm:py-3 px-3 sm:px-4 rounded-lg transition-colors flex items-center justify-center text-sm sm:text-base cursor-pointer"
                       >
                         {isLoading ? (
                           <>
@@ -206,7 +206,7 @@ function PaymentDashboard() {
                   <p className="text-gray-400 mb-3">No UPI ID added</p>
                   <button 
                     onClick={navigateToAddUPI}
-                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
+                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm transition-colors cursor-pointer"
                   >
                     Add UPI ID
                   </button>

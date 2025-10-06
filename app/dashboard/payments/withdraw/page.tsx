@@ -157,7 +157,7 @@ export default function WithdrawMoneyPage() {
         <div className="mb-6">
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4"
+            className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4 cursor-pointer"
           >
             <ArrowLeft className="w-5 h-5" />
             <span>Back</span>
@@ -209,7 +209,7 @@ export default function WithdrawMoneyPage() {
             </div>
             <button
               onClick={() => router.push('/dashboard/payments/UpiId')}
-              className="w-full mt-3 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+              className="w-full mt-3 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors cursor-pointer"
             >
               Add UPI ID
             </button>
@@ -274,7 +274,7 @@ export default function WithdrawMoneyPage() {
                   type="button"
                   onClick={() => handleQuickAmount(value)}
                   disabled={value > (wallet?.balance || 0)}
-                  className={`py-3 px-4 rounded-lg font-semibold transition-colors ${
+                  className={`py-3 px-4 rounded-lg font-semibold transition-colors cursor-pointer ${
                     value > (wallet?.balance || 0)
                       ? 'bg-gray-800 text-gray-500 cursor-not-allowed'
                       : 'bg-gray-800 text-white hover:bg-gray-700 border-2 border-transparent hover:border-blue-500'
@@ -291,7 +291,7 @@ export default function WithdrawMoneyPage() {
             <button
               type="button"
               onClick={() => handleQuickAmount(wallet.balance)}
-              className="w-full mb-4 bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors border-2 border-transparent hover:border-blue-500"
+              className="w-full mb-4 bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors border-2 border-transparent hover:border-blue-500 cursor-pointer"
             >
               Withdraw Full Balance (₹{wallet.balance.toFixed(2)})
             </button>
@@ -302,7 +302,7 @@ export default function WithdrawMoneyPage() {
             type="button"
             onClick={handleWithdraw}
             disabled={submitting || !wallet?.upiId}
-            className={`w-full font-bold py-4 px-6 rounded-xl transition-colors text-lg ${
+            className={`w-full font-bold py-4 px-6 rounded-xl transition-colors text-lg cursor-pointer ${
               submitting || !wallet?.upiId
                 ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
                 : 'bg-blue-600 hover:bg-blue-700 text-white'

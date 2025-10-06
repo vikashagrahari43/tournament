@@ -144,7 +144,7 @@ export default function LeaderboardDetailsPage() {
           <p className="text-zinc-400 text-sm sm:text-base mb-6">{error || 'Unable to load leaderboard'}</p>
           <button
             onClick={() => router.push('/dashboard/leaderboard')}
-            className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors text-sm sm:text-base"
+            className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors text-sm sm:text-base cursor-pointer"
           >
             Back to Leaderboards
           </button>
@@ -163,7 +163,7 @@ export default function LeaderboardDetailsPage() {
         {/* Back Button */}
         <button
           onClick={() => router.push('/dashboard/leaderboard')}
-          className="mb-4 sm:mb-6 flex items-center text-zinc-400 hover:text-white transition-colors group"
+          className="mb-4 sm:mb-6 flex items-center text-zinc-400 hover:text-white transition-colors group cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
           <span className="text-sm sm:text-base">Back to Leaderboards</span>
@@ -383,7 +383,7 @@ export default function LeaderboardDetailsPage() {
                     {/* View Team Button */}
                     <button
                       onClick={() => router.push(`/dashboard/leaderboard/${tournamentId}/team/${participant.teamId}`)}
-                      className="w-full sm:w-auto px-4 sm:px-5 py-2 sm:py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-all shadow-lg shadow-red-600/30 flex items-center justify-center gap-2 text-xs sm:text-sm flex-shrink-0"
+                      className="w-full sm:w-auto px-4 sm:px-5 py-2 sm:py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-all shadow-lg shadow-red-600/30 flex items-center justify-center gap-2 text-xs sm:text-sm flex-shrink-0 cursor-pointer"
                     >
                       <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       <span>View Team</span>

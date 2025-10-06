@@ -16,6 +16,7 @@ import {
   Gamepad2,
   User,
 } from 'lucide-react';
+import { signOut } from 'next-auth/react';
 
 const Dashboard = ({ children }: { children: React.ReactNode }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -23,10 +24,10 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
   const handleLogout = () => {
-    // Add logout logic here
+    
     if (window.confirm('Are you sure you want to logout?')) {
-      // In a real app, you would clear tokens, redirect to login, etc.
-      router.push('/login'); // or wherever your login page is
+
+       signOut({ callbackUrl: "/login" });    
     }
   };
 
@@ -68,8 +69,8 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
         <div className="p-6">
           {/* Logo */}
           <div className="flex items-center mb-8">
-            <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center mr-3">
-              <Trophy className="w-5 h-5 text-white" />
+            <div className=" w-12 h-12 bg-red-600 rounded-md flex items-center justify-center mr-3 ">
+              <img src="/logo.jpg" alt="Logo" className="w-12 rounded-md h-12 object-cover " />
             </div>
             <div>
               <h1 className="text-xl font-bold text-red-500">GAMING</h1>
@@ -110,7 +111,7 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
           <div className="border-t border-gray-700 pt-4">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-red-600 transition-all duration-200"
+              className="w-full flex items-center px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-red-600 transition-all duration-200 cursor-pointer"
             >
               <LogOut className="w-5 h-5 mr-3" />
               <span className="text-sm font-medium">Logout</span>
@@ -133,7 +134,7 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
             
             <div className="text-center flex-1 lg:text-left">
               <h1 className="text-2xl lg:text-4xl font-bold text-red-500 mb-1">
-                TANDAV GAMING
+                TANDAV ESPORTS
               </h1>
               <p className="text-sm lg:text-base text-gray-400">Battle Royale Championship</p>
             </div>
@@ -141,7 +142,7 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
             {/* Logout button for desktop */}
             <button
               onClick={handleLogout}
-              className="hidden lg:flex items-center px-4 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-red-600 transition-all duration-200"
+              className="hidden lg:flex items-center px-4 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-red-600 transition-all duration-200 cursor-pointer"
             >
               <LogOut className="w-5 h-5 mr-2" />
               <span className="text-sm font-medium">Logout</span>
