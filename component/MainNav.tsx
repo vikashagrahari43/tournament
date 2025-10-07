@@ -346,7 +346,7 @@ const DummyContent = () => {
             </Link>
 
             <button className="w-full sm:w-auto hover:bg-green-500 bg-blue-500 cursor-pointer text-white px-8 sm:px-12 py-3 rounded ">
-              <a href="www.youtube.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://youtube.com/@tandavesports-m3b?si=x2cxpWZ-yW_u3dCl" target="_blank" rel="noopener noreferrer">
                 Watch Live
               </a>
             </button>

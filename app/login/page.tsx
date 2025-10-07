@@ -145,7 +145,7 @@ function LoginPage() {
                     <Mail className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-500 group-focus-within:text-purple-400 transition-colors" size={18} />
                     <input
                       type="email"
-                      placeholder="demo@gmail.com"
+                      placeholder="your@gmail.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required

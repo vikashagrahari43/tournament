@@ -18,7 +18,7 @@ function SupportDas() {
               <h3 className="text-lg sm:text-xl font-bold text-red-500 mb-3 sm:mb-4">CONTACT US</h3>
               <div className="space-y-3 sm:space-y-4">
                 <a 
-                  href="https://chat.whatsapp.com/your-group-link" 
+                  href="https://chat.whatsapp.com/Dy33jkBHFGjCG4XEOc4pET?mode=ems_copy_t" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="block w-full bg-gray-800 hover:bg-gray-700 active:bg-gray-600 transition-colors p-3 sm:p-4 rounded-lg"
@@ -31,22 +31,38 @@ function SupportDas() {
                     </div>
                   </div>
                 </a>
-                
                 <a 
-                  href="mailto:support@gaming.com"
+                  href="https://www.youtube.com/@tandavesports-m3b?si=x2cxpWZ-yW_u3dCl" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
                   className="block w-full bg-gray-800 hover:bg-gray-700 active:bg-gray-600 transition-colors p-3 sm:p-4 rounded-lg"
                 >
                   <div className="flex items-center">
-                    <span className="text-xl sm:text-2xl mr-3 flex-shrink-0">📧</span>
+                    <span className="text-xl sm:text-2xl mr-3 flex-shrink-0">▶️</span>
                     <div className="min-w-0">
-                      <p className="font-bold text-sm sm:text-base truncate">Email Support</p>
-                      <p className="text-xs sm:text-sm text-gray-400 truncate">support@gaming.com</p>
+                      <p className="font-bold text-sm sm:text-base truncate">Youtube Link </p>
+                      <p className="text-xs sm:text-sm text-gray-400 truncate">Must Subscribe to watch live</p>
                     </div>
                   </div>
                 </a>
                 
                 <a 
-                  href="https://discord.gg/your-invite-code" 
+                  href="https://www.instagram.com/tandav_esports__/?igsh=YTBxdDJqemo1ZG45#"
+                   target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block w-full bg-gray-800 hover:bg-gray-700 active:bg-gray-600 transition-colors p-3 sm:p-4 rounded-lg"
+                >
+                  <div className="flex items-center">
+                    <span className="text-xl sm:text-2xl mr-3 flex-shrink-0">🅾</span>
+                    <div className="min-w-0">
+                      <p className="font-bold text-sm sm:text-base truncate">Instagram Link</p>
+                      <p className="text-xs sm:text-sm text-gray-400 truncate">tandav_esports__</p>
+                    </div>
+                  </div>
+                </a>
+                
+                <a 
+                  href="https://discord.com/invite/gfrnKWXj" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="block w-full bg-gray-800 hover:bg-gray-700 active:bg-gray-600 transition-colors p-3 sm:p-4 rounded-lg"
@@ -82,8 +98,16 @@ function SupportDas() {
               <h3 className="text-lg sm:text-xl font-bold text-red-500 mb-3 sm:mb-4">FREQUENTLY ASKED</h3>
               <div className="space-y-2 sm:space-y-3">
                 <div className="bg-gray-800 rounded-lg p-3">
-                  <p className="font-bold text-xs sm:text-sm">Time takes to Add Funds</p>
+                  <p className="font-bold text-xs sm:text-sm">Time takes to Add Funds? </p>
                   <p className="text-xs text-gray-400 mt-1">Within 24 hr the money will be credited</p>
+                </div>
+                <div className="bg-gray-800 rounded-lg p-3">
+                  <p className="font-bold text-xs sm:text-sm">What if I failed to Upload Screenshot after Payment? </p>
+                  <p className="text-xs text-gray-400 mt-1">Do'nt worry Just ReUpload with the same amount of payment </p>
+                </div>
+                <div className="bg-gray-800 rounded-lg p-3">
+                  <p className="font-bold text-xs sm:text-sm">What if I did't got my Winner Amount?</p>
+                  <p className="text-xs text-gray-400 mt-1">This is Rare But If it is please Contact to the admin</p>
                 </div>
                 <div className="bg-gray-800 rounded-lg p-3">
                   <p className="font-bold text-xs sm:text-sm">How to join a team?</p>
@@ -95,7 +119,7 @@ function SupportDas() {
                 </div>
                 <div className="bg-gray-800 rounded-lg p-3">
                   <p className="font-bold text-xs sm:text-sm">How to contact support?</p>
-                  <p className="text-xs text-gray-400 mt-1">Use WhatsApp, Email, or Discord from the contact options</p>
+                  <p className="text-xs text-gray-400 mt-1">Use WhatsApp, Instagram, or Discord from the contact options</p>
                 </div>
               </div>
             </div>
