@@ -1,16 +1,18 @@
 // app/api/tournament/[id]/route.ts
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { connecttoDatabase } from "@/lib/db";
 import Tournament from "@/model/Tournament";
 
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> } // ✅ params as Promise
 ) {
   try {
     await connecttoDatabase();
 
-    const { id } = await params;
+    // ✅ resolve the params promise
+    const { id } = await context.params;
+
     if (!id) {
       return NextResponse.json({ error: "Tournament ID is required" }, { status: 400 });
     }
@@ -21,8 +23,8 @@ export async function GET(
     }
 
     return NextResponse.json({ tournament }, { status: 200 });
-  } catch (error: any) {
-    console.error("Error fetching tournament:", error);
+  } catch (error: unknown) {
+    console.error("Error fetching tournament:", (error as Error).message);
     return NextResponse.json(
       { error: "Failed to fetch tournament details" },
       { status: 500 }

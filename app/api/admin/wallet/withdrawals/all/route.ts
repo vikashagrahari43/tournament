@@ -1,7 +1,7 @@
 
 import { authOptions } from "@/lib/auth";
 import { connecttoDatabase } from "@/lib/db";
-import Wallet from "@/model/Wallet";
+import Wallet, { ITransaction } from "@/model/Wallet";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -22,9 +22,9 @@ export async function GET() {
     ).populate("userId", "email");
 
     const withdrawals = wallets.flatMap((wallet) =>
-      wallet.transactions
-        .filter((tx: any) => tx.type === "withdraw")
-        .map((tx : any) => ({
+    (wallet.transactions as ITransaction[])
+    .filter((tx) => tx.type === "withdraw")
+        .map((tx) => ({
           _id: tx._id,
           userId: wallet.userId._id,
           userEmail: wallet.userId.email,
@@ -36,10 +36,10 @@ export async function GET() {
     );
 
     return NextResponse.json({ withdrawals }, { status: 200 });
-  } catch (err: any) {
-    console.error("Error in GET withdrawals (all):", err);
+  } catch (err: unknown) {
+    
     return NextResponse.json(
-      { error: "Failed to fetch all withdrawals", details: err.message },
+      { error: "Failed to fetch all withdrawals", details: (err as Error).message },
       { status: 500 }
     );
   }

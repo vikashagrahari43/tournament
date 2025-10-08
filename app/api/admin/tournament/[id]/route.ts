@@ -2,14 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { connecttoDatabase } from "@/lib/db";
 import Tournament from "@/model/Tournament";
 
-
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     await connecttoDatabase();
-    const { id } = await params;
+
+    // Await the params promise
+    const { id } = await context.params;
 
     const tournament = await Tournament.findById(id);
     if (!tournament) {

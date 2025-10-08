@@ -98,8 +98,8 @@ function PaymentDashboard() {
     setTimeout(() => {
       router.push("/dashboard");
     }, 100);
-  } catch (error: any) {
-    setError(error.message || "Failed to delete UPI ID. Please try again.");
+  } catch (error: unknown) {
+    setError((error as Error).message || "Failed to delete UPI ID. Please try again.");
   } finally {
     setIsLoading(false);
   }

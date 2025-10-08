@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { User, Mail, Shield, Key, Eye, EyeOff, Trash2, LogOut, UserCircle, Hash, ChevronRight, AlertCircle, CheckCircle, Loader2, X, Lock } from 'lucide-react';
+import { User, Mail, Shield, Key, Eye, EyeOff, Trash2,  Hash, ChevronRight, AlertCircle, CheckCircle, Loader2, X,  } from 'lucide-react';
 
 interface UserProfile {
   username: string;

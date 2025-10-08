@@ -71,12 +71,12 @@ export async function POST(req: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Withdraw API Error:", error);
     return NextResponse.json(
       {
         error: "Internal Server Error in withdraw API route",
-        details: error.message,
+        details: (error as Error).message,
       },
       { status: 500 }
     );

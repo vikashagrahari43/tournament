@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, { JSX } from 'react';
 import { useState, useEffect } from 'react';
 import { Trophy, Calendar, Clock, DollarSign, Users, ChevronRight, AlertCircle, Loader2, X, CheckCircle } from 'lucide-react';
 
@@ -117,7 +117,7 @@ export default function TournamentDashboard() {
     }
   };
 
-  const getStatusBadge = (status: Tournament['status']): any => {
+  const getStatusBadge = (status: Tournament['status']): JSX.Element => {
     const styles: Record<Tournament['status'], string> = {
       registering: 'bg-green-500/20 text-green-400 border-green-500/50',
       full: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/50',

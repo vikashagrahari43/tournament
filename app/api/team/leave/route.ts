@@ -54,10 +54,11 @@ export async function POST(req: NextRequest) {
       { success: true, message: "You have successfully left the team" },
       { status: 200 }
     );
-  } catch (error: any) {
-    console.error("Error leaving team:", error);
+  } catch (error: unknown) {
+    
+    
     return NextResponse.json(
-      { error: "Internal Server Error", details: error.message },
+      { error: "Internal Server Error", details: (error as Error).message },
       { status: 500 }
     );
   }

@@ -157,7 +157,7 @@ export default function MyTournaments() {
             </div>
             <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">No Tournaments Yet</h3>
             <p className="text-zinc-500 text-sm sm:text-base mb-6 max-w-md mx-auto px-4">
-              You haven't enrolled in any tournaments yet. Browse available tournaments and join one to get started!
+              You have not enrolled in any tournaments yet. Browse available tournaments and join one to get started!
             </p>
             <button
               onClick={() => router.push('/dashboard/tournament')}

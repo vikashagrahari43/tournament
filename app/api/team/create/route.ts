@@ -64,10 +64,10 @@ export async function POST(req : NextRequest) {
         {message : "Team created successfully", team},
         {status : 201}
       );
-    } catch (error: any) {
+    } catch (error: unknown) {
     console.error("Error creating team:", error);
     return NextResponse.json(
-      { error: "Internal Server Error", details: error.message },
+      { error: "Internal Server Error", details: (error as Error).message },
       { status: 500 }
     );
     }

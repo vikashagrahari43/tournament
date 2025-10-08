@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { AlertTriangle, Eye, Check, X, User, Calendar, DollarSign, Clock, History, Filter, Search } from "lucide-react";
+import { AlertTriangle, Eye, Check, X, User, Calendar, DollarSign, Clock, History,  } from "lucide-react";
+import Image from "next/image";
 
 interface Deposit {
   transactionId: string;
@@ -178,8 +179,7 @@ export default function AdminTransactions() {
     : deposits;
 
   const pendingCount = deposits.filter(d => d.status.toLowerCase() === 'pending').length;
-  const approvedCount = deposits.filter(d => d.status.toLowerCase() === 'approved').length;
-  const rejectedCount = deposits.filter(d => d.status.toLowerCase() === 'rejected').length;
+  
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 lg:p-6">
@@ -495,7 +495,7 @@ export default function AdminTransactions() {
               {selected.screenshotUrl && (
                 <div className="mb-6">
                   <p className="text-sm text-gray-600 mb-3">Payment Screenshot</p>
-                  <img
+                  <Image
                     src={selected.screenshotUrl}
                     alt="Payment Screenshot"
                     className="w-full rounded-lg border-2 border-gray-200 shadow-sm"

@@ -1,5 +1,5 @@
 // app/api/tournament/enroll/[id]/route.ts
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import Tournament from "@/model/Tournament";
@@ -8,16 +8,19 @@ import Team from "@/model/Team";
 import Wallet from "@/model/Wallet";
 import { connecttoDatabase } from "@/lib/db";
 
-export async function POST(req: Request, { params }: { params: { id: string } }) {
+export async function POST(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> } // ✅ params as Promise
+) {
   try {
     await connecttoDatabase();
 
     const session = await getServerSession(authOptions);
-    if (!session || !(session.user as any).email) {
+    if (!session || !session.user.email) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const user = await User.findOne({ email: (session.user as any).email });
+    const user = await User.findOne({ email: session.user.email });
     if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
     if (!user.teamId) {
@@ -31,7 +34,10 @@ export async function POST(req: Request, { params }: { params: { id: string } })
       return NextResponse.json({ error: "Team must have at least 4 members" }, { status: 400 });
     }
 
-    const tournament = await Tournament.findById(params.id);
+    // ✅ resolve params promise
+    const { id } = await context.params;
+
+    const tournament = await Tournament.findById(id);
     if (!tournament) return NextResponse.json({ error: "Tournament not found" }, { status: 404 });
 
     if (tournament.status !== "registering") {
@@ -44,9 +50,9 @@ export async function POST(req: Request, { params }: { params: { id: string } })
 
     // Check if team already enrolled
     if ((tournament.participants as { teamId: string }[])?.some(
-    (p) => p.teamId === user.teamId
+      (p) => p.teamId === user.teamId
     )) {
-    return NextResponse.json({ error: "Your team is already enrolled" }, { status: 400 });
+      return NextResponse.json({ error: "Your team is already enrolled" }, { status: 400 });
     }
 
     // Deduct from wallet
@@ -90,8 +96,8 @@ export async function POST(req: Request, { params }: { params: { id: string } })
       { status: 200 }
     );
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Enroll Error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }

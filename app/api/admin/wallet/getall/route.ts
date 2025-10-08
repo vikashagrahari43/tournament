@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
 
     // ✅ Check session
     const session = await getServerSession(authOptions);
-    if (!session || (session.user as any).email !== "admin@gmail.com") {
+    if (!session || (session.user.email !== "admin@gmail.com")) {
       return NextResponse.json(
         { error: "Unauthorized access" },
         { status: 401 }
@@ -30,10 +30,10 @@ export async function GET(req: NextRequest) {
       { success: true, wallets },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error fetching wallets:", error);
     return NextResponse.json(
-      { error: "Internal Server Error", details: error.message },
+      { error: "Internal Server Error", details: (error as Error).message },
       { status: 500 }
     );
   }

@@ -73,9 +73,9 @@ function RegisterPage() {
         router.push("/login");
       }, 2000);
       
-    } catch (error : any) {
+    } catch (error : unknown) {
 
-      setError(error.message || "An unexpected error occurred. Please try again.");
+      setError((error as Error).message || "An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }

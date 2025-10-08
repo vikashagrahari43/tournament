@@ -50,9 +50,9 @@ export async function POST(req: NextRequest) {
             { message: "Deposite Request Sent Successfully", wallet },
             {status: 200}
         )
-    } catch (error: any ) {
+    } catch (error: unknown) {
         return NextResponse.json(
-            {error : "Internal Server Error in addrequest api route ", details: error.message},
+            {error : "Internal Server Error in addrequest api route ", details: (error as Error).message},
             {status : 500}
         )
     }

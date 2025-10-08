@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Search, Filter, Download, Calendar } from 'lucide-react';
+import { ArrowLeft, Search, } from 'lucide-react';
 
 interface Transaction {
   _id: string | number;
@@ -155,7 +155,7 @@ export default function AllTransactionsPage() {
             {/* Filter by Type */}
             <select
               value={filterType}
-              onChange={(e) => setFilterType(e.target.value as any)}
+              onChange={(e) => setFilterType(e.target.value as 'all' | 'add' | 'withdraw' | 'tournament')}
               className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-green-500 transition-colors"
             >
               <option value="all">All Types</option>
@@ -167,7 +167,7 @@ export default function AllTransactionsPage() {
             {/* Filter by Status */}
             <select
               value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value as any)}
+              onChange={(e) => setFilterStatus(e.target.value as 'all' | 'pending' | 'completed' | 'failed')}
               className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-green-500 transition-colors"
             >
               <option value="all">All Status</option>

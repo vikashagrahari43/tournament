@@ -7,7 +7,7 @@ import { authOptions } from "@/lib/auth";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { teamid: string } }
+  context: { params: Promise<{ teamid: string }> } // ✅ params as Promise
 ) {
   try {
     await connecttoDatabase();
@@ -20,9 +20,10 @@ export async function GET(
       );
     }
 
-    const { teamid } = await params;
-    
-    const team = await Team.findOne({ teamid: teamid }); // ⚠️ use "teamid" since you set it like that in create
+    // ✅ resolve the params promise
+    const { teamid } = await context.params;
+
+    const team = await Team.findOne({ teamid });
 
     if (!team) {
       return NextResponse.json(
@@ -31,7 +32,6 @@ export async function GET(
       );
     }
 
-    // ✅ find the current user
     const user = await User.findOne({ email: session.user.email });
 
     if (!user) {
@@ -41,7 +41,6 @@ export async function GET(
       );
     }
 
-    // ✅ Check if user already has a team
     if (user.teamId && user.teamId.toString() !== team.teamid.toString()) {
       return NextResponse.json(
         { error: "You already belong to another team" },
@@ -49,13 +48,12 @@ export async function GET(
       );
     }
 
-    // ✅ Assign this team to the user
     user.teamId = team.teamid;
     await user.save();
 
     return NextResponse.json({ success: true, team });
-  } catch (error: any) {
-    console.error("Error fetching team:", error);
+  } catch (error: unknown) {
+    console.error("Error fetching team:", (error as Error).message);
     return NextResponse.json(
       { success: false, message: "Server error" },
       { status: 500 }

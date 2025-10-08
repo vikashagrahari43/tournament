@@ -1,6 +1,7 @@
 import mongoose, {Schema, model, models, Document} from "mongoose";
 
 export interface ITransaction {
+    _id?: mongoose.Types.ObjectId;
     type: "add" | "withdraw" | "tournament";
     amount: number;
     status: "pending" | "completed" | "failed";
@@ -27,7 +28,8 @@ const TransactionSchema = new Schema<ITransaction>(
         screenshotUrl: {type: String},
         date: {type: Date, default: Date.now},
         userEmail: {type: String,},
-    }
+    },
+    {_id: true}
 );
 
 const WalletSchema = new Schema<IWallet>({

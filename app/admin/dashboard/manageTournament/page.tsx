@@ -39,8 +39,8 @@ export default function AdminTournamentsList() {
       } else {
         setError(data.error || 'Failed to load tournaments');
       }
-    } catch (err) {
-      setError('An error occurred while fetching tournaments');
+    } catch (err: unknown) {
+      setError('An error occurred while fetching tournaments: ' + (err as Error).message);
     } finally {
       setLoading(false);
     }

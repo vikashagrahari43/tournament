@@ -1,6 +1,6 @@
 import { authOptions } from "@/lib/auth";
 import { connecttoDatabase } from "@/lib/db";
-import Wallet from "@/model/Wallet";
+import Wallet, { ITransaction } from "@/model/Wallet";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
@@ -26,8 +26,8 @@ export async function GET() {
     }
 
     // map mongoose transactions → frontend format
-    const transactions = wallet.transactions.map((t: any) => ({
-      _id: t._id.toString(),
+    const transactions = wallet.transactions.map((t: ITransaction) => ({
+      _id: t._id ? t._id.toString() : "",
       type: t.type,
       title: t.description || "Transaction",
       date: t.date.toISOString(), // send ISO string
@@ -36,10 +36,10 @@ export async function GET() {
     }));
 
     return NextResponse.json({ transactions }, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error fetching transactions:", error);
     return NextResponse.json(
-      { error: "Internal Server Error", details: error.message },
+      { error: "Internal Server Error", details: (error as Error).message },
       { status: 500 }
     );
   }

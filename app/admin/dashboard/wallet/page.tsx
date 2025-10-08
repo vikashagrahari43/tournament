@@ -29,7 +29,7 @@ export default function AdminAllWallets() {
   const [error, setError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedWallet, setExpandedWallet] = useState<string | null>(null);
-  const [filterStatus, setFilterStatus] = useState<'all' | 'pending' | 'completed' | 'failed'>('all');
+  
 
   useEffect(() => {
     fetchWallets();
@@ -60,8 +60,8 @@ export default function AdminAllWallets() {
 
       setWallets(data.wallets);
       setFilteredWallets(data.wallets);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError((err as Error).message);
     } finally {
       setLoading(false);
     }

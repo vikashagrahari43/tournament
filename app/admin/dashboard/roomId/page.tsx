@@ -62,7 +62,7 @@ export default function AdminTournaments() {
         setError(data.error || 'Failed to load tournaments');
       }
     } catch (err) {
-      setError('An error occurred while fetching tournaments');
+      setError('An error occurred while fetching tournaments: ' + err);
     } finally {
       setLoading(false);
     }
@@ -114,7 +114,7 @@ export default function AdminTournaments() {
         setUpdateError(data.error || 'Failed to update room credentials');
       }
     } catch (err) {
-      setUpdateError('An error occurred while updating');
+      setUpdateError('An error occurred while updating: ' + err);
     } finally {
       setUpdating(false);
     }

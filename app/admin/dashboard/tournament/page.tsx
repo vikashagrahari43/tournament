@@ -98,7 +98,7 @@ export default function AddTournamentForm() {
     } catch (error) {
       setMessage({ 
         type: 'error', 
-        text: 'An error occurred. Please try again.' 
+        text: 'An error occurred. Please try again. ' + error
       });
     } finally {
       setLoading(false);

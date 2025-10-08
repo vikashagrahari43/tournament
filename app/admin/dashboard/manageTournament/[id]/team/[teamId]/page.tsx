@@ -2,7 +2,7 @@
 import React, { JSX } from 'react';
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { Users, ArrowLeft, AlertCircle, Loader2, UserCircle, Shield, Mail, Trophy, Hash, Briefcase, Calendar } from 'lucide-react';
+import { Users, ArrowLeft, AlertCircle, Loader2, UserCircle, Shield, Mail, Trophy, Hash, Briefcase, } from 'lucide-react';
 
 interface TeamMember {
   name: string;
@@ -23,7 +23,7 @@ interface Team {
 export default function TeamDetailsPage() {
   const router = useRouter();
   const params = useParams();
-  const tournamentId = params.id as string;
+  
   const teamId = params.teamId as string;
 
   const [team, setTeam] = useState<Team | null>(null);
@@ -49,21 +49,13 @@ export default function TeamDetailsPage() {
         setError(data.error || 'Failed to load team details');
       }
     } catch (err) {
-      setError('An error occurred while fetching team details');
+      setError('An error occurred while fetching team details: ' + err);
     } finally {
       setLoading(false);
     }
   };
 
-  const formatDate = (dateString?: string): string => {
-    if (!dateString) return 'N/A';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      month: 'long', 
-      day: 'numeric', 
-      year: 'numeric' 
-    });
-  };
+ 
 
   const getRoleColor = (role: string): string => {
     const roleLower = role.toLowerCase();

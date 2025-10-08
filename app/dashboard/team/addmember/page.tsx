@@ -108,9 +108,8 @@ function AddMember() {
       } else {
         alert(data.error || "Failed to add member")
       }
-    } catch (error: any) {
-      
-      alert("Failed to add member. Please try again." + error.message)
+    } catch (error: unknown) {
+      alert("Failed to add member. Please try again." + (error as Error).message)
     } finally {
       setIsLoading(false)
     }
@@ -273,7 +272,7 @@ function AddMember() {
             <h4 className="text-sm font-medium text-red-400 mb-2">Tips:</h4>
             <ul className="text-xs text-gray-400 space-y-1">
               <li>• Make sure the BGMI ID is correct and active</li>
-              <li>• Enter a role that fits the member's playstyle</li>
+              <li>• Enter a role that fits the members playstyle</li>
               <li>• You can click on suggested roles or type your own</li>
             </ul>
           </div>

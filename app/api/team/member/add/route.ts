@@ -44,9 +44,9 @@ export async function PUT(req: NextRequest) {
             {
                 success  :true , team            
             })
-    } catch (error : any) {
+    } catch (error : unknown) {
        return NextResponse.json(
-            { error: "Error " + error.message },
+            { error: "Error " + (error as Error).message },
             { status: 500 }
         )
     }

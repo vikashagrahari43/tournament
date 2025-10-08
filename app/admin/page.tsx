@@ -2,7 +2,7 @@
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { User, Mail, Lock, Eye, EyeOff, Gamepad2, Shield, Star, Zap, AlertCircle, X, LogIn } from "lucide-react";
+import {  Mail, Lock, Eye, EyeOff,  AlertCircle, X, } from "lucide-react";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -75,9 +75,7 @@ function LoginPage() {
     setSuccess("");
   };
 
-  const handleRegisterRedirect = () => {
-    router.push("/admin/dashboard");
-  };
+  
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">

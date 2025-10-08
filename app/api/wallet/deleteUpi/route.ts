@@ -3,10 +3,10 @@ import { authOptions } from "@/lib/auth";
 import { connecttoDatabase } from "@/lib/db";
 import Wallet from "@/model/Wallet";
 import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 import mongoose from "mongoose";
 
-export async function DELETE(req: NextRequest) {
+export async function DELETE() {
   try {
     await connecttoDatabase();
     const session = await getServerSession(authOptions);

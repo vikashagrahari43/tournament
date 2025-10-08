@@ -2,22 +2,30 @@ import { authOptions } from "@/lib/auth";
 import { connecttoDatabase } from "@/lib/db";
 import Team from "@/model/Team";
 import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+// ✅ Define a proper type for session.user
+interface SessionUser {
+  id: string | null;
+  email: string | null;
+}
+
+export async function GET() {
   try {
     await connecttoDatabase();
 
-    const session = await getServerSession(authOptions); // ✅ FIXED (added await)
+    const session = await getServerSession(authOptions);
 
-    if (!session || (session.user as any).email !== "admin@gmail.com") {
+    const user = session?.user as SessionUser | null;
+
+    if (!user || user.email !== "admin@gmail.com") {
       return NextResponse.json(
         { error: "User not Authenticated" },
-        { status: 401 } // better status for unauthorized
+        { status: 401 }
       );
     }
 
-    const teams = await Team.find(); // ✅ rename to plural (good practice)
+    const teams = await Team.find();
 
     if (!teams || teams.length === 0) {
       return NextResponse.json(
@@ -31,10 +39,10 @@ export async function GET(req: NextRequest) {
       { status: 200 }
     );
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error fetching teams:", error);
     return NextResponse.json(
-      { error: "Internal Server Error", details: error.message },
+      { error: "Internal Server Error", details: (error as Error).message },
       { status: 500 }
     );
   }

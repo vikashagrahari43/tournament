@@ -59,8 +59,8 @@ export default function AdminAllTeams() {
 
       setTeams(data.teams);
       setFilteredTeams(data.teams);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError((err as Error).message);
     } finally {
       setLoading(false);
     }

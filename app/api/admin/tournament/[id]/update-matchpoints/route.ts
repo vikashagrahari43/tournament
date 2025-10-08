@@ -5,11 +5,11 @@ import Tournament from "@/model/Tournament";
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+   context: { params: Promise<{ id: string }> }
 ) {
   try {
     await connecttoDatabase();
-    const { id } = params;
+    const { id } = await context.params;
     const { teamId, matchpoints } = await request.json();
 
     const tournament = await Tournament.findById(id);
@@ -17,7 +17,7 @@ export async function PATCH(
       return NextResponse.json({ error: "Tournament not found" }, { status: 404 });
     }
 
-    const participant = tournament.participants.find((p: any) => p.teamId === teamId);
+    const participant = tournament.participants.find((p: unknown) => (p as { teamId: string }).teamId === teamId);
     if (!participant) {
       return NextResponse.json({ error: "Team not found in this tournament" }, { status: 404 });
     }

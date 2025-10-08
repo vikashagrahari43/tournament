@@ -1,6 +1,7 @@
 import mongoose, {Schema , Document, model, models } from "mongoose";
 
-interface ITeamMember {
+export interface ITeamMember {
+    _id ?: mongoose.Types.ObjectId | undefined;
     name : string ;
     bgmiId: number ;
     role : string ; 
@@ -18,7 +19,9 @@ const teamMemberSchema = new Schema<ITeamMember>({
     name : {type : String , required : true },
     bgmiId : {type : Number, required : true, unique : true},
     role: {type : String, required : true},
-})
+},
+{ _id : true }
+)
 
 const TeamSchema = new Schema<Iteam>({
     owner: {type : Schema.Types.ObjectId, required : true, unique: true ,  ref: "User"},

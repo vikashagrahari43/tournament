@@ -1,6 +1,6 @@
 
 import { connecttoDatabase } from "@/lib/db";
-import Wallet from "@/model/Wallet";
+import Wallet, { ITransaction } from "@/model/Wallet";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -14,7 +14,7 @@ export async function GET() {
     ).populate("userId", "email");
 
     const withdrawals = wallets.flatMap((wallet) =>
-      wallet.transactions.map((tx : any) => ({
+      wallet.transactions.map((tx : ITransaction) => ({
         _id: tx._id,
         userId: wallet.userId._id,
         userEmail: wallet.userId.email,
@@ -26,10 +26,10 @@ export async function GET() {
     );
 
     return NextResponse.json({ withdrawals }, { status: 200 });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Error in GET withdrawals (pending):", err);
     return NextResponse.json(
-      { error: "Failed to fetch withdrawals", details: err.message },
+      { error: "Failed to fetch withdrawals", details: (err as Error).message },
       { status: 500 }
     );
   }

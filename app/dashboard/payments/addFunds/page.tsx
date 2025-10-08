@@ -33,7 +33,7 @@ export const AddFundsPage = () => {
   };
 
   // Generate QR code image
-  const generateQRCode = (data : any) => {
+  const generateQRCode = (data: string) => {
     return (
       <div className="w-full max-w-48 h-48 bg-white p-4 rounded-lg mx-auto">
         <img 
@@ -164,11 +164,11 @@ export const AddFundsPage = () => {
                 </h4>
                 <ul className="text-xs sm:text-sm text-gray-300 space-y-1">
                   <li>• Scan the QR code and complete payment</li>
-                  <li>• Click "I Have Completed Payment" after paying</li>
+                  <li>• Click I Have Completed Payment after paying</li>
                   <li>• Funds are verified and added within 6 working hours</li>
                   <li>• Minimum deposit: ₹10.00</li>
                   <li>• Maximum deposit: ₹50,000.00 per transaction</li>
-                  <li>• All transactions are secure and encrypted Do't worry</li>
+                  <li>• All transactions are secure and encrypted Do not worry</li>
                   <li>• If any problem related to Payments you guys can directly contact us </li>
                 </ul>
               </div>

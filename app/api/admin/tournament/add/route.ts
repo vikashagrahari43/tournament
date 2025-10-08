@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+
 import { NextResponse } from "next/server";
 import Tournament from "@/model/Tournament";
 import { getServerSession } from "next-auth";
@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   try {
     await connecttoDatabase();
     const session = await getServerSession(authOptions);
-     if (!session || (session.user as any).email !== "admin@gmail.com") {
+     if (!session || session.user.email !== "admin@gmail.com") {
       return NextResponse.json(
         { error: "Not authorized" },
          { status: 401 });
@@ -33,9 +33,9 @@ export async function POST(req: Request) {
          { status: 201 }
         );
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-        { success: false, error: error.message }
+        { success: false, error: (error as Error).message }
         , { status: 500 }
     );
   }

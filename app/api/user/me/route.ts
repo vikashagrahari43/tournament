@@ -23,8 +23,8 @@ export async function GET() {
     }
 
     return NextResponse.json({ user }, { status: 200 });
-  } catch (error: any) {
-    console.error("Error fetching user:", error);
+  } catch (error: unknown) {
+    console.error("Error fetching user:", (error as Error).message);
     return NextResponse.json({ error: "Failed to fetch user" }, { status: 500 });
   }
 }

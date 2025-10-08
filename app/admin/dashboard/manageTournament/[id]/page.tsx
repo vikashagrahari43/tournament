@@ -3,7 +3,6 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { Trophy, Users, Edit, X, CheckCircle, AlertCircle, Loader2, Crown, DollarSign, ArrowLeft, Send, Eye, Calendar, Clock } from 'lucide-react';
-import { set } from 'mongoose';
 
 interface Participant {
   teamId: string;
@@ -73,7 +72,7 @@ export default function TournamentDetailsPage() {
         setError(data.error || 'Failed to load tournament');
       }
     } catch (err) {
-      setError('An error occurred while fetching tournament');
+      setError('An error occurred while fetching tournament: ' + err);
     } finally {
       setLoading(false);
     }
@@ -131,7 +130,7 @@ export default function TournamentDetailsPage() {
         setUpdateError(data.error || 'Failed to update matchpoints');
       }
     } catch (err) {
-      setUpdateError('An error occurred while updating');
+      setUpdateError('An error occurred while updating: ' + err);
     } finally {
       setUpdating(false);
     }
@@ -167,7 +166,7 @@ export default function TournamentDetailsPage() {
         setPrizeError(data.error || 'Failed to send prize');
       }
     } catch (err) {
-      setPrizeError('An error occurred while sending prize');
+      setPrizeError('An error occurred while sending prize: ' + err);
     } finally {
       setSendingPrize(false);
     }

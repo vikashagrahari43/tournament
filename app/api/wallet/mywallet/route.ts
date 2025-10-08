@@ -2,10 +2,10 @@ import { authOptions } from "@/lib/auth";
 import { connecttoDatabase } from "@/lib/db";
 import Wallet from "@/model/Wallet";
 import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 
 
-export async function GET(req: NextRequest){
+export async function GET(){
     try {
         await connecttoDatabase();
     

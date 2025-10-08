@@ -12,11 +12,11 @@ export async function GET() {
 
     // get logged-in user
     const session = await getServerSession(authOptions);
-    if (!session || !(session.user as any).email) {
+    if (!session || !session.user.email) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const user = await User.findOne({ email: (session.user as any).email });
+    const user = await User.findOne({ email: session.user.email });
     if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
     if (!user.teamId) {
@@ -29,8 +29,8 @@ export async function GET() {
     }).sort({ createdAt: -1 });
 
     return NextResponse.json({ tournaments }, { status: 200 });
-  } catch (error: any) {
-    console.error("My Tournaments Error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    console.error("My Tournaments Error:", (error as Error).message);
+    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }

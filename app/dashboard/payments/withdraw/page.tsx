@@ -126,9 +126,9 @@ export default function WithdrawMoneyPage() {
         router.push('/dashboard/payments');
       }, 2000);
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Withdrawal error:', error);
-      setError(error.message || 'Failed to process withdrawal. Please try again.');
+      setError((error as Error).message || 'Failed to process withdrawal. Please try again.');
     } finally {
       setSubmitting(false);
     }

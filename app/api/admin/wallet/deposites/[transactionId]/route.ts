@@ -4,16 +4,21 @@ import { authOptions } from "@/lib/auth";
 import { connecttoDatabase } from "@/lib/db";
 import Wallet from "@/model/Wallet";
 
-export async function PUT(req: NextRequest, { params }: { params: { transactionId: string } }) {
+export async function PUT(
+  req: NextRequest,
+  context: { params: Promise<{ transactionId: string }> } // ✅ params is a Promise
+) {
   try {
     await connecttoDatabase();
     const session = await getServerSession(authOptions);
 
-    if (!session ) {
+    if (!session) {
       return NextResponse.json({ error: "Not authorized" }, { status: 401 });
     }
 
-    const { transactionId } = await params;
+    // Await params
+    const { transactionId } = await context.params;
+
     const { action } = await req.json(); // { action: "approve" | "reject" }
 
     if (!["approve", "reject"].includes(action)) {
@@ -37,24 +42,18 @@ export async function PUT(req: NextRequest, { params }: { params: { transactionI
     if (action === "reject") {
       txn.status = "failed";
       await wallet.save();
-      return NextResponse.json(
-        { message: "Transaction rejected", transaction: txn },
-        { status: 200 }
-      );
+      return NextResponse.json({ message: "Transaction rejected", transaction: txn }, { status: 200 });
     }
 
     if (action === "approve") {
       txn.status = "completed";
-      wallet.balance += txn.amount; // balance update
+      wallet.balance += txn.amount;
       await wallet.save();
-      return NextResponse.json(
-        {
-          message: "Transaction approved and wallet updated",
-          transaction: txn,
-          balance: wallet.balance,
-        },
-        { status: 200 }
-      );
+      return NextResponse.json({
+        message: "Transaction approved and wallet updated",
+        transaction: txn,
+        balance: wallet.balance,
+      }, { status: 200 });
     }
   } catch (err) {
     console.error("PUT deposits error:", err);

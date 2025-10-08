@@ -1,5 +1,5 @@
 "use client";
-import { Home, Trophy, BarChart3, Calendar, CreditCard, Users, Wallet, TrendingUp, Activity } from 'lucide-react';
+import { Home, Trophy, BarChart3, Calendar, CreditCard, Users, Wallet,  Activity } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function AdminDashboard() {
@@ -14,8 +14,8 @@ export default function AdminDashboard() {
     { id: 'team', label: 'All Teams', icon: Users, path: '/admin/dashboard/team', color: 'from-rose-600 to-red-700' },
     { id: 'wallet', label: 'All Wallets', icon: Wallet, path: '/admin/dashboard/wallet', color: 'from-red-700 to-pink-700' },
   ];
-
-  const handleNavigation = (path: any) => {
+// can be used any at the place of string
+  const handleNavigation = (path: string) => {
     router.push(path);
   };
 

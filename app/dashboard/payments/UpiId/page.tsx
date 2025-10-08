@@ -56,9 +56,9 @@ function AddUPIId() {
         router.push('/dashboard/payments');
       }, 2000);
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error adding UPI ID:', error);
-      setError(error.message || 'Failed to add UPI ID. Please try again.');
+      setError((error as Error).message || 'Failed to add UPI ID. Please try again.');
     } finally {
       setIsLoading(false);
     }

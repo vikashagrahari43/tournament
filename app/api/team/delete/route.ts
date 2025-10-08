@@ -5,7 +5,7 @@ import { connecttoDatabase } from "@/lib/db";
 import Team from "@/model/Team";
 import User from "@/model/User";
 
-export async function DELETE(req: NextRequest) {
+export async function DELETE() {
   try {
     await connecttoDatabase();
 
@@ -64,10 +64,10 @@ export async function DELETE(req: NextRequest) {
       { success: true, message: "Team deleted successfully" },
       { status: 200 }
     );
-  } catch (error: any) {
-    console.error("Error deleting team:", error);
+  } catch (error: unknown) {
+   
     return NextResponse.json(
-      { error: "Internal Server Error", details: error.message },
+      { error: "Internal Server Error", details: (error as Error).message },
       { status: 500 }
     );
   }

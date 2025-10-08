@@ -188,7 +188,7 @@ export default function UserLeaderboardList() {
             </div>
             <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">No Tournaments Yet</h3>
             <p className="text-zinc-500 text-sm sm:text-base mb-6 max-w-md mx-auto px-4">
-              You haven't enrolled in any tournaments yet. Join a tournament to see leaderboards!
+              You have not enrolled in any tournaments yet. Join a tournament to see leaderboards!
             </p>
             <button
               onClick={() => router.push('/dashboard/tournament')}
