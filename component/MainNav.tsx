@@ -217,10 +217,10 @@ const DummyContent = () => {
 
   const developers: Developer[] = [
     {
-      name: "Arjun Sharma",
-      role: "Tournament Manager",
-      image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face&auto=format",
-      tech: "TOURNAMENT MANAGER "
+      name: "Abhishek Patel",
+      role: "Tournament Organizer",
+      image: "/abhishek.jpg",
+      tech: "Founder"
     },
     {
       name: "Vikash Agrahari",
@@ -229,10 +229,10 @@ const DummyContent = () => {
       tech: "WEBSITE DEVELOPER"
     },
     {
-      name: "Amresh Yadav",
-      role: "Tournament Admin",
-      image: "/amresh.png",
-      tech: "TOURNAMENT ADMIN"
+      name: "Ansh Yadav",
+      role: "Tournament Manager",
+      image: "/amresh.jpg",
+      tech: "Co-Founder"
     }
   ];
 
@@ -298,13 +298,15 @@ const DummyContent = () => {
           </div>
 
           {/* Heading */}
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tighter md:text-5xl lg:text-[130px] leading-tight">
+          <h1 className="text-[35px] sm:text-[45px]  font-bold tracking-tighter md:text-[70px] lg:text-[130px] leading-tight">
             TANDAV <AuroraText>ESPORTS</AuroraText>
           </h1>
 
           {/* Typewriter */}
-          <div className="mt-2 sm:mt-4 md:ml-[150px] lg:ml-[290px]">
-            <TypewriterEffectSmooth words={words} />
+          <div className="mt-2 sm:mt-4  flex justify-center">
+            <div>
+              <TypewriterEffectSmooth words={words} />
+            </div>
           </div>
 
           {/* Highlights */}
@@ -340,12 +342,12 @@ const DummyContent = () => {
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 lg:my-7 mt-6">
             <Link href="/register">
-            <button onClick={() => {}} className="w-full sm:w-auto shadow-[inset_0_0_0_2px_#616467] text-white px-8 sm:px-12 py-3 rounded tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200 cursor-pointer">
+            <button onClick={() => {}} className="w-auto sm:w-auto shadow-[inset_0_0_0_2px_#616467] text-white px-8 sm:px-12 py-3 rounded tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200 cursor-pointer">
               Join Now
             </button>
             </Link>
 
-            <button className="w-full sm:w-auto hover:bg-green-500 bg-blue-500 cursor-pointer text-white px-8 sm:px-12 py-3 rounded ">
+            <button className="w-auto sm:w-auto hover:bg-green-500 bg-blue-500 cursor-pointer text-white px-8 sm:px-12 py-3 rounded ">
               <a href="https://youtube.com/@tandavesports-m3b?si=x2cxpWZ-yW_u3dCl" target="_blank" rel="noopener noreferrer">
                 Watch Live
               </a>
