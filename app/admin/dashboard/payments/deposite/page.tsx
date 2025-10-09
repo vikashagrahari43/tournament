@@ -108,7 +108,7 @@ export default function AdminTransactions() {
     }
     fetchDeposits();
   }, [activeTab]);
-  console.log(selected && selected.screenshotUrl);
+  
 
   function showConfirmation(transaction: Deposit, action: "approve" | "reject") {
     setConfirmModal({
