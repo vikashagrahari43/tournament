@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { AlertTriangle, Eye, Check, X, User, Calendar, DollarSign, Clock, History,  } from "lucide-react";
-import Image from "next/image";
 
 interface Deposit {
   transactionId: string;
@@ -495,7 +494,7 @@ export default function AdminTransactions() {
               {selected.screenshotUrl && (
                 <div className="mb-6">
                   <p className="text-sm text-gray-600 mb-3">Payment Screenshot</p>
-                  <Image
+                  <img
                     src={selected.screenshotUrl}
                     alt="Payment Screenshot"
                     className="w-full rounded-lg border-2 border-gray-200 shadow-sm"
