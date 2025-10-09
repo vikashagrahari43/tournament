@@ -298,7 +298,7 @@ const DummyContent = () => {
           </div>
 
           {/* Heading */}
-          <h1 className="text-[35px] sm:text-[45px]  font-bold tracking-tighter md:text-[70px] lg:text-[130px] leading-tight">
+          <h1 className="text-[42px] sm:text-[45px]  font-bold tracking-tighter md:text-[70px] lg:text-[130px] leading-tight">
             TANDAV <AuroraText>ESPORTS</AuroraText>
           </h1>
 
