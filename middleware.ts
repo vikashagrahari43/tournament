@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
 
-  // Protect dashboard and admin routes except login/register
+  
   const isDashboard = request.nextUrl.pathname.startsWith('/dashboard');
   const isAdmin = request.nextUrl.pathname.startsWith('/admin');
   const isLoginOrRegister =
@@ -21,5 +21,8 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/admin/:path*'],
+  matcher: [
+    '/dashboard/:path((?!login|register).*)',
+    '/admin/:path((?!login|register).*)',
+  ],
 };
