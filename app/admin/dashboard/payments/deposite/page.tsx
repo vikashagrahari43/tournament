@@ -108,6 +108,7 @@ export default function AdminTransactions() {
     }
     fetchDeposits();
   }, [activeTab]);
+  console.log(selected && selected.screenshotUrl);
 
   function showConfirmation(transaction: Deposit, action: "approve" | "reject") {
     setConfirmModal({
@@ -491,6 +492,7 @@ export default function AdminTransactions() {
                 <p className="font-mono text-sm text-gray-900 break-all">{selected.transactionId}</p>
               </div>
 
+             
               {selected.screenshotUrl && (
                 <div className="mb-6">
                   <p className="text-sm text-gray-600 mb-3">Payment Screenshot</p>
