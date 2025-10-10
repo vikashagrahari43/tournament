@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import type { NextRequest } from 'next/server';
 
+
 const adminRoutes = [
-  '/admin',
   '/admin/dashboard',
   '/admin/dashboard/manageTournament',
   '/admin/dashboard/payments',
@@ -12,6 +12,7 @@ const adminRoutes = [
   '/admin/dashboard/tournament',
   '/admin/dashboard/wallet',
 ];
+
 const userRoutes = [
   '/dashboard',
   '/dashboard/leaderboard',
@@ -30,19 +31,28 @@ function isProtectedRoute(path: string, routes: string[]) {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Get session token using next-auth/jwt
+ 
+  if (
+    pathname === '/login' ||
+    pathname === '/admin' ||
+    pathname === '/' ||
+    pathname.startsWith('/api/auth') 
+  ) {
+    return NextResponse.next();
+  }
+
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
 
-  // Admin routes protection
+
   if (isProtectedRoute(pathname, adminRoutes)) {
     if (!token || token.id !== 'admin') {
-      return NextResponse.redirect(new URL('/login', request.url));
+      return NextResponse.redirect(new URL('/admin', request.url));
     }
   }
 
-  // User routes protection
+
   if (isProtectedRoute(pathname, userRoutes)) {
-    if (!token || token.id === 'admin') {
+    if (!token || !token.id || token.id === 'admin') {
       return NextResponse.redirect(new URL('/login', request.url));
     }
   }
@@ -50,9 +60,10 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
+
 export const config = {
   matcher: [
-    '/admin/:path*',
+    '/admin/:path((?!login).*)', 
     '/dashboard/:path*',
   ],
 };
